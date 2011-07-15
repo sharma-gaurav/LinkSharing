@@ -6,7 +6,7 @@ class Invitation {
     User to
     Topic topic
 
-    static belongsTo = [User,Topic]
+    static belongsTo = [User, Topic]
 
     static constraints = {
     }

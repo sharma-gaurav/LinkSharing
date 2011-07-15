@@ -1,6 +1,6 @@
 package com.intelligrape.linksharing
 
-class LinkResource extends Resource{
+class LinkResource extends Resource {
     String url
 
     static constraints = {
@@ -8,5 +8,6 @@ class LinkResource extends Resource{
     }
     static mapping = {
         tablePerHierarchy false
+        table 'hyperlink'
     }
 }

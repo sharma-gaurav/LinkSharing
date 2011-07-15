@@ -2,14 +2,13 @@ package com.intelligrape.linksharing
 
 import org.hibernate.cfg.annotations.reflection.XMLContext.Default
 
-class Topic {
-    boolean isPrivate=false
-    User createdBy
+class Topic implements Serializable{
+    boolean isPrivate = false
     Date dateCreated
     String name
 
-    static hasMany = [users:User, resources:Resource]
-    static belongsTo = User
+    static hasMany = [userTopics: UserTopic, resources: Resource]
+    static belongsTo = [createdBy:User]
 
     static constraints = {
 

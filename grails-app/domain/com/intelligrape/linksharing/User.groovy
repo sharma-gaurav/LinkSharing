@@ -1,24 +1,29 @@
 package com.intelligrape.linksharing
 
-class User {
+class User implements Serializable {
 
     String userName
-    String passWord
+    String password
+    String confirmPassword
     String name
     int phoneNumber
     String address
     String email
-    boolean isAdmin=false
+    boolean isAdmin = false
+    static transients = ['confirmPassword']
 
-    static hasMany = [topics:Topic, invitations:Invitation, resources:UserResource]
-    static mappedBy = [invitations:'from']
+    static hasMany = [userTopics: UserTopic, invitations: Invitation, resources: UserResource]
+    static mappedBy = [invitations: 'from']
 
     static constraints = {
-        userName(unique: true, minSize:5, maxSize: 16)
-        passWord(minSize: 6, maxSize: 16)
+        userName(unique: true, minSize: 5, maxSize: 16)
+        password(minSize: 6, maxSize: 16, validator: {value, object ->
+            if (value != object.confirmPassword)
+                return "user.password.mismatch"
+        })
         name()
         address()
-        email(email: true, unique:true)
+        email(email: true, unique: true)
         phoneNumber(maxSize: 12)
     }
 
