@@ -27,4 +27,8 @@ class User implements Serializable {
         phoneNumber(maxSize: 12)
     }
 
+    static mapping = {
+        address type: 'text'
+    }
+
 }

@@ -5,7 +5,6 @@ class DocumentResource extends Resource {
     String uuid
 
     static constraints = {
-        fileName(unique: true)
         uuid(unique: true)
     }
     static mapping = {

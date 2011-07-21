@@ -10,12 +10,6 @@
 
 <body>
 <div id="grailsLogo"> <h1>LINK SHARING APPLICATION</h1></div>
-
-<div align="right"><g:link controller="login" action="logout">Logout</g:link> |
-Current Date: <ls:myDateFormat date="${new Date()}"/>
-</div>
-
-%{--<ls:stateList/>--}%
 <g:layoutBody/>
 </body>
 </html>
