@@ -27,16 +27,16 @@
             <th>Resource Summary</th>
         </tr>
         <g:each in='${resourceList}'>
-            %{--<g:if test="${it?.isRead}=='false'">--}%
-                <tr>
-                    <td>
-                        <g:link controller="resource" action="show" id="${it?.resource?.id}">
-                            ${it?.resource?.heading}
-                        </g:link>
-                    </td>
-                    <td>${it?.resource?.topic?.name}</td>
-                    <td>${it?.resource?.summary}</td></tr>
-            %{--</g:if>--}%
+        %{--<g:if test="${it?.isRead}=='false'">--}%
+            <tr>
+                <td>
+                    <g:link controller="resource" action="show" id="${it?.resource?.id}">
+                        ${it?.resource?.heading}
+                    </g:link>
+                </td>
+                <td>${it?.resource?.topic?.name}</td>
+                <td>${it?.resource?.summary}</td></tr>
+        %{--</g:if>--}%
         </g:each>
     </table>
 </div>

@@ -9,12 +9,12 @@
 
 <body>
 %{--<div class="nav">--}%
-    %{--<span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a>--}%
-    %{--</span>--}%
-    %{--<span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label"--}%
-                                                                           %{--args="[entityName]"/></g:link></span>--}%
-    %{--<span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label"--}%
-                                                                               %{--args="[entityName]"/></g:link></span>--}%
+%{--<span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a>--}%
+%{--</span>--}%
+%{--<span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label"--}%
+%{--args="[entityName]"/></g:link></span>--}%
+%{--<span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label"--}%
+%{--args="[entityName]"/></g:link></span>--}%
 %{--</div>--}%
 
 <div class="body">
@@ -82,21 +82,21 @@
                 </tr>
 
                 %{--<tr class="prop">--}%
-                    %{--<td valign="top" class="name">--}%
-                        %{--<label for="userTopics"><g:message code="topic.userTopics.label" default="User Topics"/></label>--}%
-                    %{--</td>--}%
-                    %{--<td valign="top" class="value ${hasErrors(bean: topicInstance, field: 'userTopics', 'errors')}">--}%
+                %{--<td valign="top" class="name">--}%
+                %{--<label for="userTopics"><g:message code="topic.userTopics.label" default="User Topics"/></label>--}%
+                %{--</td>--}%
+                %{--<td valign="top" class="value ${hasErrors(bean: topicInstance, field: 'userTopics', 'errors')}">--}%
 
-                        %{--<ul>--}%
-                            %{--<g:each in="${topicInstance?.userTopics?}" var="u">--}%
-                                %{--<li><g:link controller="userTopic" action="show"--}%
-                                            %{--id="${u.id}">${u?.encodeAsHTML()}</g:link></li>--}%
-                            %{--</g:each>--}%
-                        %{--</ul>--}%
-                        %{--<g:link controller="userTopic" action="create"--}%
-                                %{--params="['topic.id': topicInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'userTopic.label', default: 'UserTopic')])}</g:link>--}%
+                %{--<ul>--}%
+                %{--<g:each in="${topicInstance?.userTopics?}" var="u">--}%
+                %{--<li><g:link controller="userTopic" action="show"--}%
+                %{--id="${u.id}">${u?.encodeAsHTML()}</g:link></li>--}%
+                %{--</g:each>--}%
+                %{--</ul>--}%
+                %{--<g:link controller="userTopic" action="create"--}%
+                %{--params="['topic.id': topicInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'userTopic.label', default: 'UserTopic')])}</g:link>--}%
 
-                    %{--</td>--}%
+                %{--</td>--}%
                 %{--</tr>--}%
 
                 </tbody>

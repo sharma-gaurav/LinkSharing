@@ -58,7 +58,7 @@ class DocumentResourceController {
             if (params.version) {
                 def version = params.version.toLong()
                 if (documentResourceInstance.version > version) {
-                    
+
                     documentResourceInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'documentResource.label', default: 'DocumentResource')] as Object[], "Another user has updated this DocumentResource while you were editing")
                     render(view: "edit", model: [documentResourceInstance: documentResourceInstance])
                     return

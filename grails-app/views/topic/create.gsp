@@ -29,7 +29,7 @@
                         <label for="createdBy"><g:message code="topic.createdBy.label" default="Created By"/></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: topicInstance, field: 'createdBy', 'errors')}">
-                            <ls:showLoggedInUserName/>
+                        <ls:showLoggedInUserName/>
                         <g:hiddenField name="createdBy.id" value="${session.currentUser}" id="createdBy"/>
                     </td>
                 </tr>

@@ -99,7 +99,7 @@ class UserController {
     }
     def register = {
         User user = new User()
-        [userInstance : user ]
+        [userInstance: user]
 
     }
 
@@ -110,16 +110,16 @@ class UserController {
             render(view: '/login/login')
         }
         else {
-            render(view: "register", model: [userInstance:user])
+            render(view: "register", model: [userInstance: user])
         }
     }
 
     def dashboard = {
         User user = User.get(session.currentUser)
-        List <UserResource> resources = user.resources as List
-        List <UserTopic> topics = user.userTopics as List
+        List<UserResource> resources = user.resources as List
+        List<UserTopic> topics = user.userTopics as List
         Topic topicInstance = new Topic()
 
-        [user1: user, resourceList: resources.findAll{!it.isRead}, topicsList: topics]
+        [user1: user, resourceList: resources.findAll {!it.isRead}, topicsList: topics]
     }
 }

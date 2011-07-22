@@ -27,7 +27,7 @@ class UserTopicController {
         else {
             flash.message = "Topic already subscribed"
         }
-        redirect(controller: 'topic', action: 'list', params: ['searchText':params.searchText])
+        redirect(controller: 'topic', action: 'list', params: ['searchText': params.searchText])
     }
 
     def show = {
@@ -58,7 +58,7 @@ class UserTopicController {
             if (params.version) {
                 def version = params.version.toLong()
                 if (userTopicInstance.version > version) {
-                    
+
                     userTopicInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'userTopic.label', default: 'UserTopic')] as Object[], "Another user has updated this UserTopic while you were editing")
                     render(view: "edit", model: [userTopicInstance: userTopicInstance])
                     return
