@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<div id="grailsLogo"> <h1>LINK SHARING APPLICATION</h1></div>
+<div id="grailsLogo"><h1>LINK SHARING APPLICATION</h1></div>
 <g:layoutBody/>
 </body>
 </html>

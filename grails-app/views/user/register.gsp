@@ -2,17 +2,15 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta name="layout" content="main"/>
+    <meta name="layout" content="login"/>
     <g:set var="entityName" value="${message(code: 'user.label', default: 'User')}"/>
     <title><g:message code="default.create.label" args="[entityName]"/></title>
 </head>
 
 <body>
 <div class="nav">
-    <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a>
+    <span class="menuButton"><a class="home" href="${createLink(uri: '/')}">Login Page</a>
     </span>
-    <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label"
-                                                                           args="[entityName]"/></g:link></span>
 </div>
 
 <div class="body">
@@ -82,7 +80,7 @@
                         <label for="address"><g:message code="user.address.label" default="Address"/></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'address', 'errors')}">
-                        <g:textArea col=30 row=40 name="address" value="${userInstance?.address}"/>
+                        <g:textArea cols='30' rows='40' name="address" value="${userInstance?.address}"/>
                     </td>
                 </tr>
 

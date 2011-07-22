@@ -1,4 +1,4 @@
-<%@ page import="com.intelligrape.linksharing.Topic" %>
+<%@ page import="com.intelligrape.linksharing.User; com.intelligrape.linksharing.Topic" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -8,12 +8,6 @@
 </head>
 
 <body>
-<div class="nav">
-    <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a>
-    </span>
-    <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label"
-                                                                           args="[entityName]"/></g:link></span>
-</div>
 
 <div class="body">
     <h1><g:message code="default.create.label" args="[entityName]"/></h1>
@@ -35,8 +29,8 @@
                         <label for="createdBy"><g:message code="topic.createdBy.label" default="Created By"/></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: topicInstance, field: 'createdBy', 'errors')}">
-                        <g:select name="createdBy.id" from="${com.intelligrape.linksharing.User.list()}" optionKey="id"
-                                  value="${topicInstance?.createdBy?.id}"/>
+                            <ls:showLoggedInUserName/>
+                        <g:hiddenField name="createdBy.id" value="${session.currentUser}" id="createdBy"/>
                     </td>
                 </tr>
 

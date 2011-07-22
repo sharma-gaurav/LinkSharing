@@ -1,20 +1,17 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: gaurav
-  Date: 19/7/11
-  Time: 12:52 PM
-  To change this template use File | Settings | File Templates.
---%>
-
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 
-<head><title>Login Page</title>
+<head>
+    <title>Login Page</title>
+    <meta name="layout" content="login"/>
 </head>
 
 
 <body>
-<g:form action="loginHandler" method="POST">
+<g:if test="${flash.message}">
+    <div class="message">${flash.message}</div>
+</g:if>
+<g:form action="loginHandler" method="POST" controller="login">
     <div>
         <table>
             <tr><td>User Name:</td>

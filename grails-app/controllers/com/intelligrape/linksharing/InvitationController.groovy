@@ -112,14 +112,22 @@ class InvitationController {
             }
         }
         else {
-            render "Invitation successfully Added"
             cmd.tos.each {
                 def invitation = new Invitation();
                 invitation.from = User.get(cmd.from)
                 invitation.to = User.findByEmail(it);
                 invitation.topic = Topic.get(cmd.topic)
                 invitation.save(flush: true)
+
+                if (invitation) {
+                    sendMail {
+                        to invitation.to?.email
+                        subject "Hello ${invitation.to?.name}"
+                        html "You have got an invitation for the Topic ${invitation.topic?.name} from ${invitation.from?.name}."
+                    }
+                }
             }
+            render "mail sent"
         }
     }
 }

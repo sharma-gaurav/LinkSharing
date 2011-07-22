@@ -19,6 +19,7 @@ class Resource {
     }
 
     static constraints = {
-
+        heading(blank: false, nullable: false)
+        summary(blank: false, nullable: false)
     }
 }

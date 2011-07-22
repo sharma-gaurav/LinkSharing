@@ -13,25 +13,51 @@
 </head>
 
 <body>
+
 <h1>Welcome ${user1.name}</h1>
 <br>
 
 <div>
-    You have following Unread Resources:
+    <h2>You have following Unread Resources:</h2>
     <br>
     <table>
         <tr>
             <th>Resource Heading</th>
-            <th>Belongs To</th>
+            <th>Topic</th>
             <th>Resource Summary</th>
         </tr>
-    <g:each in='${user1.resources}'>
-        <tr><td>${it.resource.heading}</td>
-            <td>${it.resource.topic.name}</td>
-            <td>${it.resource.summary}</td></tr>
-    </g:each>
+        <g:each in='${resourceList}'>
+            %{--<g:if test="${it?.isRead}=='false'">--}%
+                <tr>
+                    <td>
+                        <g:link controller="resource" action="show" id="${it?.resource?.id}">
+                            ${it?.resource?.heading}
+                        </g:link>
+                    </td>
+                    <td>${it?.resource?.topic?.name}</td>
+                    <td>${it?.resource?.summary}</td></tr>
+            %{--</g:if>--}%
+        </g:each>
     </table>
-    %{--<ls:topicTable/>--}%
+</div>
+
+<div padding-top='20'>
+    <h2>Topics Subscribed By You are:</h2>
+    <br>
+    <table>
+        <tr>
+            <th>Topic Name</th>
+        </tr>
+        <g:each in="${topicsList}" var="topic">
+            <tr>
+                <td><g:link controller="topic" action="show" id="${topic.topic.id}">${topic.topic?.name}</g:link></td>
+            </tr>
+        </g:each>
+    </table>
+</div>
+
+<div>
+    <h2></h2>
 </div>
 </body>
 </html>

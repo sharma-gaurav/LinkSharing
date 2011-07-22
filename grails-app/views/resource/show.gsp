@@ -37,7 +37,7 @@
                 <td valign="top" class="name"><g:message code="resource.createdBy.label" default="Created By"/></td>
 
                 <td valign="top" class="value"><g:link controller="user" action="show"
-                                                       id="${resourceInstance?.createdBy?.id}">${resourceInstance?.createdBy?.encodeAsHTML()}</g:link></td>
+                                                       id="${resourceInstance?.createdBy?.id}">${resourceInstance?.createdBy?.name}</g:link></td>
 
             </tr>
 
@@ -66,7 +66,7 @@
                 <td valign="top" class="name"><g:message code="resource.topic.label" default="Topic"/></td>
 
                 <td valign="top" class="value"><g:link controller="topic" action="show"
-                                                       id="${resourceInstance?.topic?.id}">${resourceInstance?.topic?.encodeAsHTML()}</g:link></td>
+                                                       id="${resourceInstance?.topic?.id}">${resourceInstance?.topic?.name}</g:link></td>
 
             </tr>
 

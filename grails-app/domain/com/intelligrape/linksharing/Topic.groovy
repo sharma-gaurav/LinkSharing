@@ -1,7 +1,5 @@
 package com.intelligrape.linksharing
 
-import org.hibernate.cfg.annotations.reflection.XMLContext.Default
-
 class Topic implements Serializable {
     boolean isPrivate = false
     Date dateCreated
@@ -12,5 +10,12 @@ class Topic implements Serializable {
 
     static constraints = {
 
+    }
+
+    def afterInsert = {
+        User user = this.createdBy
+        UserTopic userTopic = new UserTopic(topic: this, user: user)
+        user.addToUserTopics(userTopic)
+        this.addToUserTopics(userTopic)
     }
 }

@@ -8,6 +8,6 @@
 
 <select name="stateList">
     <g:each in="${stateList1}">
-         <option value="${it}">${it}</option>
+        <option value="${it}">${it}</option>
     </g:each>
 </select>

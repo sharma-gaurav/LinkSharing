@@ -98,24 +98,28 @@ class UserController {
         }
     }
     def register = {
+        User user = new User()
+        [userInstance : user ]
 
     }
 
     def registerHandler = {
-        def user = new User(params)
-        if (!user.hasErrors() && user.validate()) {
-            user.save(flush: true, validate: false)
+        User user = new User(params)
+        if (user.save()) {
+            flash.message = "You are successfully Register!! Now you can Log In!!"
+            render(view: '/login/login')
         }
         else {
-            user.errors.allErrors.each {
-                println it
-            }
+            render(view: "register", model: [userInstance:user])
         }
     }
 
     def dashboard = {
-        def user = User.get(session.currentUser)
+        User user = User.get(session.currentUser)
+        List <UserResource> resources = user.resources as List
+        List <UserTopic> topics = user.userTopics as List
+        Topic topicInstance = new Topic()
 
-        [user1:user]
+        [user1: user, resourceList: resources.findAll{!it.isRead}, topicsList: topics]
     }
 }

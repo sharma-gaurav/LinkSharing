@@ -18,6 +18,8 @@ class LoginController {
             false
         }
         else {
+            flash.message = "User Name and Password does not Match"
+            redirect(controller: 'login', action: 'login')
             false
         }
     }

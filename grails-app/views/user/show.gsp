@@ -75,19 +75,19 @@
 
             </tr>
 
-            <tr class="prop">
-                <td valign="top" class="name"><g:message code="user.invitations.label" default="Invitations"/></td>
+            %{--<tr class="prop">--}%
+            %{--<td valign="top" class="name"><g:message code="user.invitations.label" default="Invitations"/></td>--}%
 
-                <td valign="top" style="text-align: left;" class="value">
-                    <ul>
-                        <g:each in="${userInstance.invitations}" var="i">
-                            <li><g:link controller="invitation" action="show"
-                                        id="${i.id}">${i?.encodeAsHTML()}</g:link></li>
-                        </g:each>
-                    </ul>
-                </td>
+            %{--<td valign="top" style="text-align: left;" class="value">--}%
+            %{--<ul>--}%
+            %{--<g:each in="${userInstance.invitations}" var="i">--}%
+            %{--<li><g:link controller="invitation" action="show"--}%
+            %{--id="${i.id}">${i?.encodeAsHTML()}</g:link></li>--}%
+            %{--</g:each>--}%
+            %{--</ul>--}%
+            %{--</td>--}%
 
-            </tr>
+            %{--</tr>--}%
 
             <tr class="prop">
                 <td valign="top" class="name"><g:message code="user.isAdmin.label" default="Is Admin"/></td>
@@ -96,33 +96,33 @@
 
             </tr>
 
-            <tr class="prop">
-                <td valign="top" class="name"><g:message code="user.resources.label" default="Resources"/></td>
+            %{--<tr class="prop">--}%
+            %{--<td valign="top" class="name"><g:message code="user.resources.label" default="Resources"/></td>--}%
 
-                <td valign="top" style="text-align: left;" class="value">
-                    <ul>
-                        <g:each in="${userInstance.resources}" var="r">
-                            <li><g:link controller="userResource" action="show"
-                                        id="${r.id}">${r?.encodeAsHTML()}</g:link></li>
-                        </g:each>
-                    </ul>
-                </td>
+            %{--<td valign="top" style="text-align: left;" class="value">--}%
+            %{--<ul>--}%
+            %{--<g:each in="${userInstance.resources}" var="r">--}%
+            %{--<li><g:link controller="userResource" action="show"--}%
+            %{--id="${r.id}">${r?.encodeAsHTML()}</g:link></li>--}%
+            %{--</g:each>--}%
+            %{--</ul>--}%
+            %{--</td>--}%
 
-            </tr>
+            %{--</tr>--}%
 
-            <tr class="prop">
-                <td valign="top" class="name"><g:message code="user.userTopics.label" default="User Topics"/></td>
+            %{--<tr class="prop">--}%
+            %{--<td valign="top" class="name"><g:message code="user.userTopics.label" default="User Topics"/></td>--}%
 
-                <td valign="top" style="text-align: left;" class="value">
-                    <ul>
-                        <g:each in="${userInstance.userTopics}" var="u">
-                            <li><g:link controller="userTopic" action="show"
-                                        id="${u.id}">${u?.encodeAsHTML()}</g:link></li>
-                        </g:each>
-                    </ul>
-                </td>
+            %{--<td valign="top" style="text-align: left;" class="value">--}%
+            %{--<ul>--}%
+            %{--<g:each in="${userInstance.userTopics}" var="u">--}%
+            %{--<li><g:link controller="userTopic" action="show"--}%
+            %{--id="${u.id}">${u?.encodeAsHTML()}</g:link></li>--}%
+            %{--</g:each>--}%
+            %{--</ul>--}%
+            %{--</td>--}%
 
-            </tr>
+            %{--</tr>--}%
 
             </tbody>
         </table>
@@ -133,9 +133,9 @@
             <g:hiddenField name="id" value="${userInstance?.id}"/>
             <span class="button"><g:actionSubmit class="edit" action="edit"
                                                  value="${message(code: 'default.button.edit.label', default: 'Edit')}"/></span>
-            <span class="button"><g:actionSubmit class="delete" action="delete"
-                                                 value="${message(code: 'default.button.delete.label', default: 'Delete')}"
-                                                 onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/></span>
+        %{--<span class="button"><g:actionSubmit class="delete" action="delete"--}%
+        %{--value="${message(code: 'default.button.delete.label', default: 'Delete')}"--}%
+        %{--onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/></span>--}%
         </g:form>
     </div>
 </div>

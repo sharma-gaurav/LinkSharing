@@ -4,7 +4,7 @@ class LinkResource extends Resource {
     String url
 
     static constraints = {
-        url(url: true)
+        url(url: true, blank: false, nullable: false)
     }
     static mapping = {
         tablePerHierarchy false

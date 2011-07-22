@@ -8,14 +8,14 @@
 </head>
 
 <body>
-<div class="nav">
-    <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a>
-    </span>
-    <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label"
-                                                                           args="[entityName]"/></g:link></span>
-    <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label"
-                                                                               args="[entityName]"/></g:link></span>
-</div>
+%{--<div class="nav">--}%
+%{--<span class="menuButton"><a class="home" href="${createLink(uri: '/user/dashboard')}"><g:message code="default.home.label"/></a>--}%
+%{--</span>--}%
+%{--<span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label"--}%
+%{--args="[entityName]"/></g:link></span>--}%
+%{--<span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label"--}%
+%{--args="[entityName]"/></g:link></span>--}%
+%{--</div>--}%
 
 <div class="body">
     <h1><g:message code="default.show.label" args="[entityName]"/></h1>
@@ -36,8 +36,7 @@
             <tr class="prop">
                 <td valign="top" class="name"><g:message code="topic.createdBy.label" default="Created By"/></td>
 
-                <td valign="top" class="value"><g:link controller="user" action="show"
-                                                       id="${topicInstance?.createdBy?.id}">${topicInstance?.createdBy?.encodeAsHTML()}</g:link></td>
+                <td valign="top" class="value">${topicInstance?.createdBy?.name}</td>
 
             </tr>
 
@@ -67,28 +66,33 @@
 
                 <td valign="top" style="text-align: left;" class="value">
                     <ul>
-                        <g:each in="${topicInstance.resources}" var="r">
-                            <li><g:link controller="resource" action="show"
-                                        id="${r.id}">${r?.encodeAsHTML()}</g:link></li>
+                        <g:each in="${topicInstance.resources}" var="resource">
+                            <li><g:link controller="linkResource" action="show"
+                                        id="${resource.id}">${resource?.heading}</g:link></li>
                         </g:each>
                     </ul>
+                    <g:link controller="linkResource" action="create"
+                            params="['topic.id':topicInstance.id]">Add New Link Resource</g:link>
+                    <br>
+                    <g:link controller="documentResource" action="create">Add New Document Resource</g:link>
                 </td>
 
             </tr>
 
-            <tr class="prop">
-                <td valign="top" class="name"><g:message code="topic.userTopics.label" default="User Topics"/></td>
+            %{--<tr class="prop">--}%
+            %{--<td valign="top" class="name"><g:message code="topic.userTopics.label" default="Subscribed By"/></td>--}%
 
-                <td valign="top" style="text-align: left;" class="value">
-                    <ul>
-                        <g:each in="${topicInstance.userTopics}" var="u">
-                            <li><g:link controller="userTopic" action="show"
-                                        id="${u.id}">${u?.encodeAsHTML()}</g:link></li>
-                        </g:each>
-                    </ul>
-                </td>
+            %{--<td valign="top" style="text-align: left;" class="value">--}%
+            %{--<ul>--}%
+            %{--<g:each in="${topicInstance.userTopics}" var="u">--}%
+            %{--<li>${u.user?.name}</li>--}%
+            %{--<li><g:link controller="userTopic" action="show"--}%
+            %{--id="${u.id}">${u.user?.name}</g:link></li>--}%
+            %{--</g:each>--}%
+            %{--</ul>--}%
+            %{--</td>--}%
 
-            </tr>
+            %{--</tr>--}%
 
             </tbody>
         </table>
@@ -96,13 +100,18 @@
 
     <div class="buttons">
         <g:form>
-            <g:hiddenField name="id" value="${topicInstance?.id}"/>
-            <span class="button"><g:actionSubmit class="edit" action="edit"
-                                                 value="${message(code: 'default.button.edit.label', default: 'Edit')}"/></span>
-            <span class="button"><g:actionSubmit class="delete" action="delete"
-                                                 value="${message(code: 'default.button.delete.label', default: 'Delete')}"
-                                                 onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/></span>
-            <g:link controller='invitation' action='send' params="['id':topicInstance?.id]">Send Invitations</g:link>
+            <ls:ifCurrentUser id='${topicInstance?.createdBy?.id}'>
+                <g:hiddenField name="id" value="${topicInstance?.id}"/>
+                <span class="button"><g:actionSubmit class="edit" action="edit"
+                                                     value="${message(code: 'default.button.edit.label', default: 'Edit')}"/></span>
+
+                <span class="button"><g:actionSubmit class="delete" action="delete"
+                                                     value="${message(code: 'default.button.delete.label', default: 'Delete')}"
+                                                     onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/></span>
+            </ls:ifCurrentUser>
+            <g:link controller='invitation' action='send'
+                    params="['id':topicInstance?.id]">Send Invitations</g:link>
+
         </g:form>
     </div>
 

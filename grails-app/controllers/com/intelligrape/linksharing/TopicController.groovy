@@ -9,8 +9,10 @@ class TopicController {
     }
 
     def list = {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [topicInstanceList: Topic.list(params), topicInstanceTotal: Topic.count()]
+        params.max = Math.min(params.max ? params.int('max') : 5, 100)
+        List<Topic> topicList = Topic.findAllByIsPrivateAndNameIlike(false, "%${params.searchText}%", params)
+        Integer totalCount = Topic.countByIsPrivateAndNameIlike(false, "%${params.searchText}%")
+        [topicInstanceList: topicList, topicInstanceTotal: totalCount, searchText: params.searchText]
     }
 
     def create = {

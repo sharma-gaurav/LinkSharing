@@ -8,13 +8,6 @@
 </head>
 
 <body>
-<div class="nav">
-    <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a>
-    </span>
-    <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label"
-                                                                               args="[entityName]"/></g:link></span>
-</div>
-
 <div class="body">
     <h1><g:message code="default.list.label" args="[entityName]"/></h1>
     <g:if test="${flash.message}">
@@ -25,17 +18,19 @@
             <thead>
             <tr>
 
-                <g:sortableColumn property="id" title="${message(code: 'topic.id.label', default: 'Id')}"/>
+                <g:sortableColumn property="id" title="${message(code: 'topic.id.label', default: 'Id')}"
+                                  params="[searchText:searchText]"/>
 
                 <th><g:message code="topic.createdBy.label" default="Created By"/></th>
 
-                <g:sortableColumn property="dateCreated"
+                <g:sortableColumn property="dateCreated" params="[searchText:searchText]"
                                   title="${message(code: 'topic.dateCreated.label', default: 'Date Created')}"/>
 
-                <g:sortableColumn property="isPrivate"
+                <g:sortableColumn property="isPrivate" params="[searchText:searchText]"
                                   title="${message(code: 'topic.isPrivate.label', default: 'Is Private')}"/>
 
-                <g:sortableColumn property="name" title="${message(code: 'topic.name.label', default: 'Name')}"/>
+                <g:sortableColumn property="name" title="${message(code: 'topic.name.label', default: 'Name')}"
+                                  params="[searchText:searchText]"/>
 
             </tr>
             </thead>
@@ -54,6 +49,16 @@
 
                     <td>${fieldValue(bean: topicInstance, field: "name")}</td>
 
+                    <td>
+                        <ls:isSubscribed topic="${topicInstance}">
+                            <g:form controller="userTopic" action="save">
+                                <g:hiddenField name="user.id" value="${session.currentUser}"/>
+                                <g:hiddenField name="topic.id" value="${topicInstance?.id}"/>
+                                <g:hiddenField name="searchText" value="${searchText}"/>
+                                <g:submitButton name="subscribe" value="subscribe"/>
+                            </g:form>
+                        </ls:isSubscribed>
+                    </td>
                 </tr>
             </g:each>
             </tbody>
@@ -61,7 +66,7 @@
     </div>
 
     <div class="paginateButtons">
-        <g:paginate total="${topicInstanceTotal}"/>
+        <g:paginate total="${topicInstanceTotal}" params="[searchText:searchText]"/>
     </div>
 </div>
 </body>

@@ -1,12 +1,17 @@
 package com.intelligrape.linksharing
 
+import linksharing.MyJob
+import org.quartz.core.QuartzScheduler
+import linksharing.MyJob
+
 class UtilController {
 
+    def QuartzScheduler
     def index = {
-        User user1 = new User(userName: "test122", password: "password", confirmPassword: "password", name: "Gaurav",        \
-                        phoneNumber: 123456789, address: "new delhi", email: "111@xyz.com")
-        User user2 = new User(userName: "test222", password: "password", confirmPassword: "password", name: "Charu",        \
-                        phoneNumber: 123456789, address: "new delhi", email: "2222@def.com")
+        User user1 = new User(userName: "test122", password: "password", confirmPassword: "password", name: "Gaurav",          \
+                          phoneNumber: 123456789, address: "new delhi", email: "111@xyz.com")
+        User user2 = new User(userName: "test222", password: "password", confirmPassword: "password", name: "Charu",          \
+                          phoneNumber: 123456789, address: "new delhi", email: "2222@def.com")
         if (user1.validate()) {
             user1.save(flush: true, validate: false)
 
@@ -40,8 +45,8 @@ class UtilController {
     def createResources = {
         Topic.list().each {Topic topic ->
             (1..10).each {
-                topic.addToResources(new LinkResource(topic: topic, createdBy: User.get(1), heading: "Grails Heading",      \
-              summary: "Grails summary", url: "http://www.google.com"))
+                topic.addToResources(new LinkResource(topic: topic, createdBy: User.get(1), heading: "Grails Heading",        \
+                summary: "Grails summary", url: "http://www.google.com"))
             }
         }
     }
@@ -63,5 +68,20 @@ class UtilController {
         UserResource.findAllByIsReadAndUser(false, User.get(1)).each {
             println it.resource;
         }
+    }
+    def triggerJob = {
+        MyJob.triggerNow(name: 'myTrigger')
+        quartzScheduler.resumeAll()
+        render "Job Triggered 1"
+    }
+
+    def mail = {
+        sendMail {
+            to "kushal@intelligrape.com"
+            subject "Hello Kushal"
+            html '<b>Hello</b> World'
+        }
+
+        render "Mail Sent"
     }
 }

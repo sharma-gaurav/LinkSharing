@@ -10,106 +10,39 @@ import org.hibernate.Session
 class BootStrap {
 
     void addUser() {
-        User user1 = new User(userName: "admin", password: "password", confirmPassword: "password", name: "Gaurav",                                \
-                   phoneNumber: 123456789, address: "new delhi", email: "admin@intelligrape.com", isAdmin: true)
-        User user2 = new User(userName: "test2", password: "password", confirmPassword: "password", name: "Charu",                                \
-                                                phoneNumber: 123456789, address: "new delhi", email: "222@intelligrape.com")
-        User user3 = new User(userName: "test3", password: "password", confirmPassword: "password", name: "Charu",                                \
-                                                phoneNumber: 123456789, address: "new delhi", email: "333@intelligrape.com")
-        User user4 = new User(userName: "test4", password: "password", confirmPassword: "password", name: "Charu",                                \
-                                                phoneNumber: 123456789, address: "new delhi", email: "444@intelligrape.com")
-        User user5 = new User(userName: "test5", password: "password", confirmPassword: "password", name: "Charu",                                \
-                                                phoneNumber: 123456789, address: "new delhi", email: "555@intelligrape.com")
-        User user6 = new User(userName: "test6", password: "password", confirmPassword: "password", name: "Charu",                                \
-                                                phoneNumber: 123456789, address: "new delhi", email: "666@intelligrape.com")
+        User user1 = new User(userName: "admin", password: "password", confirmPassword: "password", name: "Gaurav",                                       \
+                          phoneNumber: 123456789, address: "new delhi", email: "admin@intelligrape.com", isAdmin: true)
+        User user2 = new User(userName: "test2", password: "password", confirmPassword: "password", name: "Charu",                                       \
+                                                       phoneNumber: 123456789, address: "new delhi", email: "222@intelligrape.com")
+        User user3 = new User(userName: "test3", password: "password", confirmPassword: "password", name: "Charu",                                       \
+                                                       phoneNumber: 123456789, address: "new delhi", email: "charu@intelligrape.com")
+        User user4 = new User(userName: "test4", password: "password", confirmPassword: "password", name: "Charu",                                       \
+                                                       phoneNumber: 123456789, address: "new delhi", email: "444@intelligrape.com")
+        User user5 = new User(userName: "test5", password: "password", confirmPassword: "password", name: "Charu",                                       \
+                                                       phoneNumber: 123456789, address: "new delhi", email: "555@intelligrape.com")
+        User user6 = new User(userName: "test6", password: "password", confirmPassword: "password", name: "Gaurav",                                       \
+                                                       phoneNumber: 123456789, address: "new delhi", email: "gauravs@intelligrape.com")
 
-        if (user1.validate()) {
-            user1.save(flush: true, validate: false)
 
-        }
-        else {
-            user1.errors.allErrors.each {
-                println it
-            }
-        }
+        user1.save(flush: true)
         user2.save(flush: true)
-        user2.errors.allErrors.each {
-            println it
-        }
+        addTopics(user2)
         user3.save(flush: true)
-        user3.errors.allErrors.each {
-            println it
-        }
-        user4.save(flush: true)
-        user4.errors.allErrors.each {
-            println it
-        }
         user5.save(flush: true)
-        user5.errors.allErrors.each {
-            println it
-        }
         user6.save(flush: true)
-        user6.errors.allErrors.each {
-            println it
-        }
     }
 
-    void addTopic() {
-        Topic topic1 = new Topic(isPrivate: false, createdBy: User.findByUserName('test6'), name: "Grails")
-        Topic topic2 = new Topic(isPrivate: false, createdBy: User.findByUserName('test2'), name: "ADA")
-        Topic topic3 = new Topic(isPrivate: false, createdBy: User.findByUserName('test3'), name: "Groovy")
-        Topic topic4 = new Topic(isPrivate: false, createdBy: User.findByUserName('test4'), name: "Maths")
-        Topic topic5 = new Topic(isPrivate: false, createdBy: User.findByUserName('test5'), name: "C++")
+    void addTopics(User user) {
 
-        topic1.save(flush: true)
-        topic1.errors.allErrors.each {
-            println it
+        ('A'..'Z').each {
+            new Topic(isPrivate: false, createdBy: user, name: "${it}").save(flush: true)
         }
-        topic2.save(flush: true)
-        topic2.errors.allErrors.each {
-            println it
-        }
-
-        topic3.save(flush: true)
-        topic3.errors.allErrors.each {
-            println it
-        }
-        topic4.save(flush: true)
-        topic4.errors.allErrors.each {
-            println it
-        }
-
-        topic5.save(flush: true)
-        topic5.errors.allErrors.each {
-            println it
-        }
-
-
-
-        UserTopic userTopic6 = new UserTopic(user: User.findByUserName('test2'), topic: topic1)
-        userTopic6.save()
-        UserTopic userTopic2 = new UserTopic(user: User.findByUserName('test3'), topic: topic5)
-        userTopic2.save()
-        UserTopic userTopic3 = new UserTopic(user: User.findByUserName('test2'), topic: topic4)
-        userTopic3.save()
-        UserTopic userTopic4 = new UserTopic(user: User.findByUserName('test3'), topic: topic2)
-        userTopic4.save()
-        UserTopic userTopic5 = new UserTopic(user: User.findByUserName('test4'), topic: topic2)
-        userTopic5.save()
-        UserTopic userTopic7 = new UserTopic(user: User.findByUserName('test4'), topic: topic3)
-        userTopic7.save()
-        UserTopic userTopic8 = new UserTopic(user: User.findByUserName('test5'), topic: topic3)
-        userTopic8.save()
-        UserTopic userTopic9 = new UserTopic(user: User.findByUserName('test5'), topic: topic5)
-        userTopic9.save()
-        User.findByUserName('test2').addToUserTopics(new UserTopic(topic: topic3))
-        User.findByUserName('test2').addToUserTopics(new UserTopic(topic: topic5))
 
     }
 
     def init = { servletContext ->
         addUser()
-        addTopic()
+        addTopics()
         createResources()
         createDocumentResource()
 
@@ -123,8 +56,8 @@ class BootStrap {
     void createResources() {
         Topic.list().each {Topic topic ->
             (1..10).each {
-                topic.addToResources(new LinkResource(topic: topic, createdBy: User.get(2), heading: "Grails Heading",                            \
-                                        summary: "Grails summary", url: "http://www.google.com"))
+                topic.addToResources(new LinkResource(topic: topic, createdBy: User.get(2), heading: "Grails Heading",                                   \
+                                               summary: "Grails summary", url: "http://www.google.com"))
             }
         }
         println "created resource"

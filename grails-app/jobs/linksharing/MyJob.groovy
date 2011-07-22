@@ -1,7 +1,7 @@
 package linksharing
 
 
-class GauravJob {
+public class MyJob {
     static triggers = {
         cron name: 'myTrigger', cronExpression: "0/2 * * * * ?"
     }
@@ -10,3 +10,4 @@ class GauravJob {
 
     def execute() { print "Job run!" }
 }
+

@@ -6,7 +6,7 @@ class User implements Serializable {
     String password
     String confirmPassword
     String name
-    int phoneNumber
+    Long phoneNumber
     String address
     String email
     boolean isAdmin = false
@@ -16,15 +16,15 @@ class User implements Serializable {
     static mappedBy = [invitations: 'from']
 
     static constraints = {
-        userName(unique: true, minSize: 5, maxSize: 16)
-        password(minSize: 6, maxSize: 16, validator: {value, object ->
+        userName(unique: true, minSize: 5, maxSize: 16, nullable: false, blank: false)
+        password(minSize: 6, maxSize: 16, nullable: false, blank: false, validator: {value, object ->
             if (value != object.confirmPassword)
                 return "user.password.mismatch"
         })
-        name()
-        address()
-        email(email: true, unique: true)
-        phoneNumber(maxSize: 12)
+        name(nullable: false, blank: false)
+        address(nullable: false, blank: false)
+        email(nullable: false, blank: false, email: true, unique: true)
+        phoneNumber(maxSize: 12, blank: false)
     }
 
     static mapping = {
