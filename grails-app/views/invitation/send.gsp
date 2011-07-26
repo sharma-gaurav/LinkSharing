@@ -8,15 +8,16 @@
 
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
-<head><title>Send Invitation</title></head>
+<head><title>Send Invitation</title>
+    <meta name="layout" content="main"/></head>
 
 <body>
 <g:form action="sendHandler">
-    Sending Invitation from: ${from?.email} <br>
-    <g:hiddenField name='from' value='${from?.id}'/>
-    for the Topic: ${topic?.name} <br>
-    <g:hiddenField name='topic' value='${topic?.id}'/>
-    To:
+    <h4>Sending Invitation from: ${from?.email} <br>
+        <g:hiddenField name='from' value='${from?.id}'/>
+        for the Topic: ${topic?.name} <br>
+        <g:hiddenField name='topic' value='${topic?.id}'/>
+        To:</h4>
     <table>
         <tr><td><g:textField name='tos'/></td></tr>
         <tr><td><g:textField name='tos'/></td></tr>

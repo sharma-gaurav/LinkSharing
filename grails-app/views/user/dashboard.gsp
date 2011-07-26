@@ -17,9 +17,14 @@
 <h1>Welcome ${user1.name}</h1>
 <br>
 
-<div>
-    <h2>You have following Unread Resources:</h2>
+<div style="float:left; width: 49%">
+    <h2>You have following Resources:</h2>
     <br>
+
+    <div>
+        %{--<g:button>Unread Resources</g:button>--}%
+        %{--<g:button>All Resources</g:button>--}%
+    </div>
     <table>
         <tr>
             <th>Resource Heading</th>
@@ -27,21 +32,19 @@
             <th>Resource Summary</th>
         </tr>
         <g:each in='${resourceList}'>
-        %{--<g:if test="${it?.isRead}=='false'">--}%
             <tr>
                 <td>
-                    <g:link controller="resource" action="show" id="${it?.resource?.id}">
+                    %{--<g:link controller="resource" action="show" id="${it?.resource?.id}">--}%
                         ${it?.resource?.heading}
-                    </g:link>
+                    %{--</g:link>--}%
                 </td>
                 <td>${it?.resource?.topic?.name}</td>
                 <td>${it?.resource?.summary}</td></tr>
-        %{--</g:if>--}%
         </g:each>
     </table>
 </div>
 
-<div padding-top='20'>
+<div style="float:right; width:49%">
     <h2>Topics Subscribed By You are:</h2>
     <br>
     <table>
@@ -54,10 +57,42 @@
             </tr>
         </g:each>
     </table>
+
+    <div class="paginateButtons">
+        <g:paginate total="${topicListTotal}"/>
+    </div>
+
+    <h2></h2>
 </div>
 
-<div>
-    <h2></h2>
+<div style="float:left; width:49%">
+    <table>
+        <tr>
+            <th>Topic</th>
+            <th>Number of Subscribers</th>
+        </tr>
+        <g:each in="${topicList}" var="topic">
+            <tr>
+                <td>${topic?.first()?.name}</td>
+                <td>${topic?.last()}</td>
+            </tr>
+        </g:each>
+    </table>
+</div>
+
+<div style="float:right; width:49%">
+    <table>
+        <tr>
+            <th>Resource Name</th>
+            <th>Read by Number of User</th>
+        </tr>
+        <g:each in="${mostRead}" var="resource">
+            <tr>
+                <td>${resource?.first()?.heading}</td>
+                <td>${resource?.last()}</td>
+            </tr>
+        </g:each>
+    </table>
 </div>
 </body>
 </html>

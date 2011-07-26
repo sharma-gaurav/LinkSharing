@@ -1,5 +1,7 @@
 package com.intelligrape.linksharing
 
+import org.hibernate.criterion.Projection
+
 class UserController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -115,11 +117,34 @@ class UserController {
     }
 
     def dashboard = {
+        params.max = Math.min(params.max ? params.int('max') : 5, 100)
         User user = User.get(session.currentUser)
         List<UserResource> resources = user.resources as List
-        List<UserTopic> topics = user.userTopics as List
-        Topic topicInstance = new Topic()
+        List<UserTopic> topics = UserTopic.findAllByUser(user, params)
+        Integer topicCount = UserTopic.countByUser(user)
+        def topicList = UserTopic.createCriteria().list() {
+            projections {
+                groupProperty("topic")
+                count("user")
+            }
+            'topic' {
+                eq('isPrivate', false)
+            }
+        }
+        topicList = topicList.sort {it.last()}.reverse()
 
-        [user1: user, resourceList: resources.findAll {!it.isRead}, topicsList: topics]
+        def mostRead = UserResource.createCriteria().list() {
+            projections {
+                groupProperty("resource")
+                count("user")
+            }
+            eq('isRead', true)
+        }
+
+        mostRead = mostRead.sort {it.last()}.reverse()
+
+
+
+        [user1: user, resourceList: resources.findAll {!it.isRead}, topicsList: topics, topicListTotal: topicCount, topicList: topicList, mostRead: mostRead]
     }
 }
