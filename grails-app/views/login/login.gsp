@@ -8,9 +8,9 @@
 
 
 <body>
-<div>
-    <input type="button" id="Time" name="Time" value="Get Time"/>
-</div>
+%{--<div>--}%
+    %{--<input type="button" id="Time" name="Time" value="Get Time"/>--}%
+%{--</div>--}%
 
 <div id="test">
 
@@ -36,21 +36,21 @@
     <br>
     <g:link controller='user' action='register'>Register New User</g:link>
 </g:form>
-<jq:jquery>
-    function updateDateTime(){
+%{--<jq:jquery>--}%
+    %{--function updateDateTime(){--}%
 %{--jQuery.ajax({--}%
 %{--'url' : "${createLink(controller: 'login', action: 'dateGetter')}",--}%
 %{--'success': function(data){--}%
 %{--console.debug(data)--}%
 %{--jQuery("#test").text(data.message)--}%
 %{--})--}%
-        var name = $("input[name=userName]").val()
-        jQuery.get("${createLink(controller: 'login', action: 'dateGetter')}",{'name':name}, function(data){
-                jQuery("#test").text(data.message)
-        })
-    }
-
-    $('#Time').click(updateDateTime)
-</jq:jquery>
+        %{--var name = $("input[name=userName]").val()--}%
+        %{--jQuery.get("${createLink(controller: 'login', action: 'dateGetter')}",{'name':name}, function(data){--}%
+                %{--jQuery("#test").text(data.message)--}%
+        %{--})--}%
+    %{--}--}%
+%{----}%
+    %{--$('#Time').click(updateDateTime)--}%
+%{--</jq:jquery>--}%
 </body>
 </html>
