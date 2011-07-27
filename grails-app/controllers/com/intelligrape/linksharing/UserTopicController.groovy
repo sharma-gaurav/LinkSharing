@@ -2,6 +2,8 @@ package com.intelligrape.linksharing
 
 class UserTopicController {
 
+    def subscriptionService
+
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index = {
@@ -20,12 +22,12 @@ class UserTopicController {
     }
 
     def save = {
-        def userTopicInstance = new UserTopic(params)
-        if (userTopicInstance.save(flush: true)) {
-            flash.message = "${message(code: 'default.created.message', args: [message(code: 'userTopic.label', default: 'UserTopic'), userTopicInstance.id])}"
+        try {
+            subscriptionService.subscribeTopicAndPopulateResources(com.intelligrape.linksharing.User.get(params.user.id), com.intelligrape.linksharing.Topic.get(params.topic.id))
+            flash.message = "${message(code: 'default.created.message', args: [message(code: 'userTopic.label', default: 'UserTopic'), params.user.id])}"
         }
-        else {
-            flash.message = "Topic already subscribed"
+        catch (RuntimeException rte) {
+            flash.message = rte.message
         }
         redirect(controller: 'topic', action: 'list', params: ['searchText': params.searchText])
     }

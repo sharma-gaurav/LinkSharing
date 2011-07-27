@@ -1,6 +1,7 @@
 package com.intelligrape.linksharing
 
 class InvitationController {
+    def mailingService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -105,29 +106,18 @@ class InvitationController {
 
         [from: sender, topic: topicToSend]
     }
+
     def sendHandler = {SendCommand cmd ->
-        if (cmd.hasErrors()) {
-            cmd.errors.allErrors.each {
-                println it
-            }
+        println "Into the send handler ${cmd.from}"
+        if (cmd.from) {
+            println "Into if"
+//            mailingService.sendInvitation(cmd.tos,cmd.from,cmd.topic)
+            render "mail sent"
+
         }
         else {
-            cmd.tos.each {
-                def invitation = new Invitation();
-                invitation.from = User.get(cmd.from)
-                invitation.to = User.findByEmail(it);
-                invitation.topic = Topic.get(cmd.topic)
-                invitation.save(flush: true)
-
-                if (invitation) {
-                    sendMail {
-                        to invitation.to?.email
-                        subject "Hello ${invitation.to?.name}"
-                        html "You have got an invitation for the Topic ${invitation.topic?.name} from ${invitation.from?.name}."
-                    }
-                }
-            }
-            render "mail sent"
+            println "into else"
+            render "Mail not send."
         }
     }
 }

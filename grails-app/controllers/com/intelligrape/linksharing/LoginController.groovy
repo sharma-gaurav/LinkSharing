@@ -1,5 +1,7 @@
 package com.intelligrape.linksharing
 
+import grails.converters.JSON
+
 class LoginController {
 
     def login = {
@@ -27,5 +29,15 @@ class LoginController {
     def logout = {
         session.invalidate();
         redirect(action: login)
+    }
+
+    def dateGetter = {
+        println params.name
+        if (User.findByName(params.name)) {
+            render(Map[message: "Hello You exist"] as JSON)
+        }
+        else {
+            render(Map[message: "Sorry You dont exist"] as JSON)
+        }
     }
 }

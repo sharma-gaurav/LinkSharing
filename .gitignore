@@ -6,3 +6,6 @@ target/
 .classpath
 .project
 nohup.out
+out/
+stacktrace.log
+cobertura.ser

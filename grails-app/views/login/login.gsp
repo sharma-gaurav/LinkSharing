@@ -8,6 +8,14 @@
 
 
 <body>
+<div>
+    <input type="button" id="Time" name="Time" value="Get Time"/>
+</div>
+
+<div id="test">
+
+</div>
+
 <g:if test="${flash.message}">
     <div class="message">${flash.message}</div>
 </g:if>
@@ -18,7 +26,8 @@
                 <td><input type="text" name="userName"/></td></tr>
             <tr><td>Password:</td>
                 <td><input type="password" name="password"/></td></tr>
-            <tr><td></td><td><input type="submit" name="Submit"/></td></tr>
+            <tr><td></td><td><input type="submit" name="Submit" value="Sign In"/></td></tr>
+
         </table>
     </div>
 
@@ -27,5 +36,21 @@
     <br>
     <g:link controller='user' action='register'>Register New User</g:link>
 </g:form>
+<jq:jquery>
+    function updateDateTime(){
+%{--jQuery.ajax({--}%
+%{--'url' : "${createLink(controller: 'login', action: 'dateGetter')}",--}%
+%{--'success': function(data){--}%
+%{--console.debug(data)--}%
+%{--jQuery("#test").text(data.message)--}%
+%{--})--}%
+        var name = $("input[name=userName]").val()
+        jQuery.get("${createLink(controller: 'login', action: 'dateGetter')}",{'name':name}, function(data){
+                jQuery("#test").text(data.message)
+        })
+    }
+
+    $('#Time').click(updateDateTime)
+</jq:jquery>
 </body>
 </html>

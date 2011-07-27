@@ -17,82 +17,97 @@
 <h1>Welcome ${user1.name}</h1>
 <br>
 
-<div style="float:left; width: 49%">
-    <h2>You have following Resources:</h2>
-    <br>
+<div>
+    <div">
+        <div style="float:left; width: 49%">
+            <h3>You have following Resources:</h3>
+            <br>
+
+            <div>
+                %{--<g:button>Unread Resources</g:button>--}%
+                %{--<g:button>All Resources</g:button>--}%
+            </div>
+            <table>
+                <tr>
+                    <th>Resource Heading</th>
+                    <th>Topic</th>
+                    <th>Resource Summary</th>
+                </tr>
+                <g:each in='${resourceList}'>
+                    <tr>
+                        <td>
+                            %{--<g:link controller="resource" action="show" id="${it?.resource?.id}">--}%
+                            ${it?.resource?.heading}
+                            %{--</g:link>--}%
+                        </td>
+                        <td>${it?.resource?.topic?.name}</td>
+                        <td>${it?.resource?.summary}</td></tr>
+                </g:each>
+            </table>
+            <br>
+        </div>
+
+        <div style="float:right; width:49%">
+            <h3>Topics Subscribed By You are:</h3>
+            <br>
+            <table>
+                <tr>
+                    <th>Topic Name</th>
+                </tr>
+                <g:each in="${topicsList}" var="topic">
+                    <tr>
+                        <td><g:link controller="topic" action="show"
+                                    id="${topic.topic.id}">${topic.topic?.name}</g:link></td>
+                    </tr>
+                </g:each>
+            </table>
+
+            <div class="paginateButtons">
+                <g:paginate total="${topicListTotal}"/>
+            </div>
+            <br>
+        </div>
+    </div>
 
     <div>
-        %{--<g:button>Unread Resources</g:button>--}%
-        %{--<g:button>All Resources</g:button>--}%
+        <div style="float:left; width:49%">
+            <h3>Most Subscribed Topics are:</h3>
+            <br>
+            <table>
+                <tr>
+                    <th>Topic</th>
+                    <th>Number of Subscribers</th>
+                </tr>
+                <g:each in="${topicList}" var="topic">
+                    <tr>
+                        <td><g:link controller="topic" action="show" id="${topic?.first()?.id}">
+                            ${topic?.first()?.name}</g:link></td>
+                        <td>${topic?.last()}</td>
+                    </tr>
+                </g:each>
+            </table>
+            <br>
+        </div>
+
+        <div style="float:right; width:49%">
+            <h3>Most Read Resources are:</h3>
+            <br>
+            <table>
+                <tr>
+                    <th>Resource Name</th>
+                    <th>Read by Number of User</th>
+                </tr>
+                <g:each in="${mostRead}" var="resource">
+                    <tr>
+                        <td><g:link controller="resource" action="show" id="${resource?.first()?.id}">
+                            ${resource?.first()?.heading}</g:link></td>
+                        <td>${resource?.last()}</td>
+                    </tr>
+                </g:each>
+            </table>
+            <br>
+        </div>
     </div>
-    <table>
-        <tr>
-            <th>Resource Heading</th>
-            <th>Topic</th>
-            <th>Resource Summary</th>
-        </tr>
-        <g:each in='${resourceList}'>
-            <tr>
-                <td>
-                    %{--<g:link controller="resource" action="show" id="${it?.resource?.id}">--}%
-                        ${it?.resource?.heading}
-                    %{--</g:link>--}%
-                </td>
-                <td>${it?.resource?.topic?.name}</td>
-                <td>${it?.resource?.summary}</td></tr>
-        </g:each>
-    </table>
-</div>
-
-<div style="float:right; width:49%">
-    <h2>Topics Subscribed By You are:</h2>
-    <br>
-    <table>
-        <tr>
-            <th>Topic Name</th>
-        </tr>
-        <g:each in="${topicsList}" var="topic">
-            <tr>
-                <td><g:link controller="topic" action="show" id="${topic.topic.id}">${topic.topic?.name}</g:link></td>
-            </tr>
-        </g:each>
-    </table>
-
-    <div class="paginateButtons">
-        <g:paginate total="${topicListTotal}"/>
-    </div>
-
-    <h2></h2>
-</div>
-
-<div style="float:left; width:49%">
-    <table>
-        <tr>
-            <th>Topic</th>
-            <th>Number of Subscribers</th>
-        </tr>
-        <g:each in="${topicList}" var="topic">
-            <tr>
-                <td>${topic?.first()?.name}</td>
-                <td>${topic?.last()}</td>
-            </tr>
-        </g:each>
-    </table>
-</div>
-
-<div style="float:right; width:49%">
-    <table>
-        <tr>
-            <th>Resource Name</th>
-            <th>Read by Number of User</th>
-        </tr>
-        <g:each in="${mostRead}" var="resource">
-            <tr>
-                <td>${resource?.first()?.heading}</td>
-                <td>${resource?.last()}</td>
-            </tr>
-        </g:each>
-    </table>
 </div>
 </body>
 </html>

@@ -122,6 +122,7 @@ class UserController {
         List<UserResource> resources = user.resources as List
         List<UserTopic> topics = UserTopic.findAllByUser(user, params)
         Integer topicCount = UserTopic.countByUser(user)
+
         def topicList = UserTopic.createCriteria().list() {
             projections {
                 groupProperty("topic")
@@ -140,10 +141,7 @@ class UserController {
             }
             eq('isRead', true)
         }
-
         mostRead = mostRead.sort {it.last()}.reverse()
-
-
 
         [user1: user, resourceList: resources.findAll {!it.isRead}, topicsList: topics, topicListTotal: topicCount, topicList: topicList, mostRead: mostRead]
     }

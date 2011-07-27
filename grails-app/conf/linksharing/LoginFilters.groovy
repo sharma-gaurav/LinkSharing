@@ -5,7 +5,7 @@ import com.intelligrape.linksharing.User
 class LoginFilters {
 
     def filters = {
-        all(controller: 'login|user', action: 'login|register|save|loginHandler|registerHandler', invert: true) {
+        all(controller: 'login|user', action: 'login|register|save|loginHandler|registerHandler|dateGetter', invert: true) {
             before = {
                 if (!session.currentUser && controllerName) {
                     flash.message = "Please Login!"

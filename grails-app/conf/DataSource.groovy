@@ -19,8 +19,8 @@ environments {
     }
     test {
         dataSource {
-            dbCreate = "update"
-            url = "jdbc:hsqldb:mem:testDb"
+            dbCreate = "create"
+            url = "jdbc:mysql://127.0.0.1:3306/linksharingTest"
         }
     }
     production {
