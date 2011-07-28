@@ -17,8 +17,7 @@
         <table width="50%">
             <thead>
             <tr>
-
-                <g:sortableColumn property="id" title="${message(code: 'topic.id.label', default: 'Id')}"
+                <g:sortableColumn property="name" title="${message(code: 'topic.name.label', default: 'Name')}"
                                   params="[searchText:searchText]"/>
 
                 <th><g:message code="topic.createdBy.label" default="Created By"/></th>
@@ -29,8 +28,7 @@
                 <g:sortableColumn property="isPrivate" params="[searchText:searchText]"
                                   title="${message(code: 'topic.isPrivate.label', default: 'Is Private')}"/>
 
-                <g:sortableColumn property="name" title="${message(code: 'topic.name.label', default: 'Name')}"
-                                  params="[searchText:searchText]"/>
+                <th>Subscribe</th>
 
             </tr>
             </thead>
@@ -39,15 +37,13 @@
                 <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
 
                     <td><g:link action="show"
-                                id="${topicInstance.id}">${fieldValue(bean: topicInstance, field: "id")}</g:link></td>
+                                id="${topicInstance.id}">${topicInstance?.name}</g:link></td>
 
-                    <td>${fieldValue(bean: topicInstance, field: "createdBy")}</td>
+                    <td>${topicInstance?.createdBy?.name}</td>
 
-                    <td><g:formatDate date="${topicInstance.dateCreated}"/></td>
+                    <td><g:formatDate date="${topicInstance?.dateCreated}"/></td>
 
-                    <td><g:formatBoolean boolean="${topicInstance.isPrivate}"/></td>
-
-                    <td>${fieldValue(bean: topicInstance, field: "name")}</td>
+                    <td><g:formatBoolean boolean="${topicInstance?.isPrivate}"/></td>
 
                     <td>
                         <ls:isSubscribed topic="${topicInstance}">

@@ -299,3 +299,11 @@ th.desc a {
     background: transparent url(../images/skin/database_save.png) 5px 50% no-repeat;
     padding-left: 28px;
 }
+
+label.error {
+    background: url("../images/unchecked.gif") no-repeat scroll 0 0 transparent;
+    color: red;
+    margin-left: 0.3em;
+    padding-left: 16px;
+}
+

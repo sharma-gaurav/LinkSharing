@@ -50,11 +50,9 @@ class BootstrapService {
                 linkResource.save(flush:true)
                 topic.addToResources(linkResource);
                 UserResource userResource = new UserResource(resource: linkResource, user: linkResource.createdBy)
-                println linkResource
                 linkResource.createdBy.addToResources(userResource)
             }
         }
-        println "created resource"
     }
 
     void createDocumentResource() {
@@ -65,12 +63,10 @@ class BootstrapService {
                 documentResource.save(flush: true)
                 topic.addToResources(documentResource)
                 UserResource userResource = new UserResource(resource: documentResource, user: documentResource.createdBy)
-                println documentResource
                 documentResource.createdBy.addToResources(userResource)
             }
         }
 
-        println "Created Document resource"
     }
 
     void createRead() {
@@ -79,7 +75,6 @@ class BootstrapService {
             UserResource userResource = new UserResource(user: User.get(2), resource: Resource.get(it), isRead: true)
             userResource.save(flush: true)
         }
-        println "resources added to read resource"
     }
 
     void markUnread() {
@@ -87,12 +82,10 @@ class BootstrapService {
             UserResource userResource = UserResource.get(it)
             userResource.isRead = false
         }
-        println "Marked unread"
     }
 
     void printUnread() {
         UserResource.findAllByIsReadAndUser(false, User.get(2)).each {
         }
-        println "Marked read"
     }
 }

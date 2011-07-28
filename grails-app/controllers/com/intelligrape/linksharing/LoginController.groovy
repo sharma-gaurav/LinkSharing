@@ -31,13 +31,21 @@ class LoginController {
         redirect(action: login)
     }
 
-    def dateGetter = {
-        println params.name
-        if (User.findByName(params.name)) {
-            render(Map[message: "Hello You exist"] as JSON)
-        }
-        else {
-            render(Map[message: "Sorry You dont exist"] as JSON)
+//    def dateGetter = {
+    //        println params
+    //        if (User.findByUserNameAndPassword(params.userName,params.password)) {
+    //            render([message: "Hello you are a valid user"] as JSON)
+    //        }
+    //        else {
+    //            render([message: "Sorry You are not a valid user"] as JSON)
+    //        }
+    //    }
+    def emailValidate = {
+        User user = User.findByEmail(params.email)
+        if (user) {
+            render false
+        } else {
+            render true
         }
     }
 }

@@ -18,7 +18,7 @@ class User implements Serializable {
     static constraints = {
         userName(unique: true, minSize: 5, maxSize: 16, nullable: false, blank: false)
         password(minSize: 6, maxSize: 16, nullable: false, blank: false, validator: {value, object ->
-            if (value != object.confirmPassword)
+            if (!object.id && value != object.confirmPassword)
                 return "user.password.mismatch"
         })
         name(nullable: false, blank: false)

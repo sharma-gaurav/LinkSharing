@@ -10,6 +10,11 @@
 <html>
 <head><title>User Dashboard</title>
     <meta name="layout" content="main"/>
+    <script src="${resource(dir: 'js', file: 'jquery.tablesorter.js')}" type="text/javascript">
+    </script>
+    <script src="${resource(dir: 'js', file: 'jquery-ui-1.8.14.custom.min.js')}" type="text/javascript">
+    </script>
+
 </head>
 
 <body>
@@ -17,40 +22,46 @@
 <h1>Welcome ${user1.name}</h1>
 <br>
 
-<div>
-    <div">
-        <div style="float:left; width: 49%">
-            <h3>You have following Resources:</h3>
-            <br>
+<div class="demo">
+    <div id="tabs">
+        <ul>
+            <li><a href="#tabs-1">Unread Resources:</a></li>
+            <li><a href="#tabs-2">Topics Subscribed:</a></li>
+            <li><a href="#tabs-4">Most Read Resources:</a></li>
+            <li><a href="#tabs-3">Most Subscribed Topics:</a></li>
+            <li></li>
+        </ul>
 
-            <div>
-                %{--<g:button>Unread Resources</g:button>--}%
-                %{--<g:button>All Resources</g:button>--}%
-            </div>
-            <table>
+        <div id="tabs-1">
+            %{--<div>--}%
+            %{--<g:button>Unread Resources</g:button>--}%
+            %{--<g:button>All Resources</g:button>--}%
+            %{--</div>--}%
+            <table class="tablesorter">
+                <thead>
                 <tr>
                     <th>Resource Heading</th>
                     <th>Topic</th>
                     <th>Resource Summary</th>
                 </tr>
-                <g:each in='${resourceList}'>
+                </thead>
+                <tbody>
+                <g:each in='${resourceList}' var="userResource">
                     <tr>
                         <td>
-                            %{--<g:link controller="resource" action="show" id="${it?.resource?.id}">--}%
-                            ${it?.resource?.heading}
-                            %{--</g:link>--}%
-                        </td>
-                        <td>${it?.resource?.topic?.name}</td>
-                        <td>${it?.resource?.summary}</td></tr>
+                            <g:link controller="resource" action="show"
+                                    id="${userResource?.resource?.id}">
+                                ${userResource?.resource?.heading}</g:link></td>
+                        <td>${userResource?.resource?.topic?.name}</td>
+                        <td>${userResource?.resource?.summary}</td></tr>
                 </g:each>
+                </tbody>
             </table>
-            <br>
+
         </div>
 
-        <div style="float:right; width:49%">
-            <h3>Topics Subscribed By You are:</h3>
-            <br>
-            <table>
+        <div id="tabs-2">
+            <table class="tablesorter">
                 <tr>
                     <th>Topic Name</th>
                 </tr>
@@ -67,13 +78,10 @@
             </div>
             <br>
         </div>
-    </div>
 
-    <div>
-        <div style="float:left; width:49%">
-            <h3>Most Subscribed Topics are:</h3>
-            <br>
-            <table>
+
+        <div id="tabs-3">
+            <table class="tablesorter">
                 <tr>
                     <th>Topic</th>
                     <th>Number of Subscribers</th>
@@ -86,13 +94,10 @@
                     </tr>
                 </g:each>
             </table>
-            <br>
         </div>
 
-        <div style="float:right; width:49%">
-            <h3>Most Read Resources are:</h3>
-            <br>
-            <table>
+        <div id="tabs-4">
+            <table class="tablesorter">
                 <tr>
                     <th>Resource Name</th>
                     <th>Read by Number of User</th>
@@ -109,5 +114,12 @@
         </div>
     </div>
 </div>
+
+<jq:jquery>
+    $(document).ready(function(){
+      $(".tablesorter").tablesorter();
+  })
+  $("#tabs").tabs();
+</jq:jquery>
 </body>
 </html>

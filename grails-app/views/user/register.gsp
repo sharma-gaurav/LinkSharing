@@ -5,6 +5,10 @@
     <meta name="layout" content="login"/>
     <g:set var="entityName" value="${message(code: 'user.label', default: 'User')}"/>
     <title><g:message code="default.create.label" args="[entityName]"/></title>
+    <script src="${resource(dir: 'js', file: 'jquery.validate.js')}" type="text/javascript">
+    </script>
+    %{--<script src="${resource(dir: 'js', file: 'jquery-ui-1.8.14.custom.min.js')}" type="text/javascript">--}%
+    %{--  </script>--}%
 </head>
 
 <body>
@@ -23,7 +27,7 @@
             <g:renderErrors bean="${userInstance}" as="list"/>
         </div>
     </g:hasErrors>
-    <g:form action="registerHandler">
+    <g:form action="registerHandler" name="registerForm">
         <div class="dialog">
             <table>
                 <tbody>
@@ -33,7 +37,8 @@
                         <label for="userName"><g:message code="user.userName.label" default="User Name"/></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'userName', 'errors')}">
-                        <g:textField name="userName" maxlength="16" value="${userInstance?.userName}"/>
+                        <g:textField name="userName" minlength="5" maxlength="16" value="${userInstance?.userName}"
+                                     class="required"/>
                     </td>
                 </tr>
 
@@ -42,7 +47,8 @@
                         <label for="password"><g:message code="user.password.label" default="Password"/></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'password', 'errors')}">
-                        <g:passwordField name="password" maxlength="16" value="${userInstance?.password}"/>
+                        <g:passwordField name="password" maxlength="16" value="${userInstance?.password}"
+                                         minlength="5"/>
                     </td>
                 </tr>
 
@@ -62,7 +68,7 @@
                         <label for="name"><g:message code="user.name.label" default="Name"/></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'name', 'errors')}">
-                        <g:textField name="name" value="${userInstance?.name}"/>
+                        <g:textField name="name" value="${userInstance?.name}" class="required"/>
                     </td>
                 </tr>
 
@@ -80,7 +86,8 @@
                         <label for="address"><g:message code="user.address.label" default="Address"/></label>
                     </td>
                     <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'address', 'errors')}">
-                        <g:textArea cols='30' rows='40' name="address" value="${userInstance?.address}"/>
+                        <g:textArea cols='30' rows='40' name="address" value="${userInstance?.address}"
+                                    class="required"/>
                     </td>
                 </tr>
 
@@ -92,7 +99,7 @@
                     <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'phoneNumber', 'errors')}">
                         <g:textField name="phoneNumber"
                                      value="${fieldValue(bean: userInstance, field: 'phoneNumber')}"
-                                     maxlength="10"/>
+                                     maxlength="10" class="required digits"/>
                     </td>
                 </tr>
 
@@ -104,7 +111,55 @@
             <span class="button"><g:submitButton name="create" class="save"
                                                  value="${message(code: 'default.button.create.label', default: 'Register')}"/></span>
         </div>
+
+        %{--<div class="demo">--}%
+
+            %{--<p>Date: <input id="datepicker" type="text"></p>--}%
+
+        %{--</div><!-- End demo -->--}%
     </g:form>
 </div>
+%{--<jq:jquery>--}%
+    %{--$("#registerForm").validate({--}%
+        %{--rules: {--}%
+            %{--password: "required",--}%
+            %{--confirmPassword: {--}%
+                %{--equalTo:"#password"--}%
+            %{--},--}%
+            %{--email: {--}%
+                %{--required: true,--}%
+                %{--email: true,--}%
+                %{--remote: "${createLink(controller: 'login', action: 'emailValidate')}"--}%
+            %{--}--}%
+        %{--},--}%
+        %{--messages: {--}%
+            %{--userName: {--}%
+                %{--required: "You must enter your User Name!",--}%
+                %{--minlength: "Your User Name must consist of atleast 5 characters!",--}%
+            %{--},--}%
+            %{--password: {--}%
+                %{--required: "You must enter your Password!",--}%
+                %{--minlength: "Your Password must consist of atleast 6 characters!",--}%
+            %{--},--}%
+            %{--confirmPassword: {--}%
+                %{--required: "You must Re-enter Password!",--}%
+                %{--minlength: "Your Password must consist of atleast 6 characters!",--}%
+            %{--},--}%
+            %{--email: {--}%
+                %{--required: "You must enter your e-mail!",--}%
+                %{--remote: "User with this e-mail address already exist.!"--}%
+            %{--},--}%
+            %{--address: {--}%
+                %{--required: "You must enter your Address!",--}%
+            %{--},--}%
+            %{--phoneNumber: {--}%
+                %{--required: "You must enter your Phone Number!",--}%
+            %{--}--}%
+        %{--}--}%
+
+    %{--});--}%
+    %{--$( "#datepicker" ).datepicker();--}%
+
+%{--</jq:jquery>--}%
 </body>
 </html>

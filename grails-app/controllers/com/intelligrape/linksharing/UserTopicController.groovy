@@ -23,7 +23,7 @@ class UserTopicController {
 
     def save = {
         try {
-            subscriptionService.subscribeTopicAndPopulateResources(com.intelligrape.linksharing.User.get(params.user.id), com.intelligrape.linksharing.Topic.get(params.topic.id))
+            subscriptionService.subscribeTopicAndPopulateResources(User.get(params.user.id), Topic.get(params.topic.id))
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'userTopic.label', default: 'UserTopic'), params.user.id])}"
         }
         catch (RuntimeException rte) {
