@@ -16,13 +16,13 @@ class TopicController {
     }
 
     def create = {
-        def topicInstance = new Topic()
+        Topic topicInstance = new Topic()
         topicInstance.properties = params
         return [topicInstance: topicInstance]
     }
 
     def save = {
-        def topicInstance = new Topic(params)
+        Topic topicInstance = new Topic(params)
         if (topicInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'topic.label', default: 'Topic'), topicInstance.id])}"
             redirect(action: "show", id: topicInstance.id)
@@ -33,29 +33,29 @@ class TopicController {
     }
 
     def show = {
-        def topicInstance = Topic.get(params.id)
-        if (!topicInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'topic.label', default: 'Topic'), params.id])}"
-            redirect(action: "list")
+        Topic topicInstance = Topic.get(params.id)
+        if (topicInstance) {
+            [topicInstance: topicInstance]
         }
         else {
-            [topicInstance: topicInstance]
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'topic.label', default: 'Topic'), params.id])}"
+            redirect(action: "list")
         }
     }
 
     def edit = {
-        def topicInstance = Topic.get(params.id)
-        if (!topicInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'topic.label', default: 'Topic'), params.id])}"
-            redirect(action: "list")
+        Topic topicInstance = Topic.get(params.id)
+        if (topicInstance) {
+            return [topicInstance: topicInstance]
         }
         else {
-            return [topicInstance: topicInstance]
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'topic.label', default: 'Topic'), params.id])}"
+            redirect(action: "list")
         }
     }
 
     def update = {
-        def topicInstance = Topic.get(params.id)
+        Topic topicInstance = Topic.get(params.id)
         if (topicInstance) {
             if (params.version) {
                 def version = params.version.toLong()
@@ -82,7 +82,7 @@ class TopicController {
     }
 
     def delete = {
-        def topicInstance = Topic.get(params.id)
+        Topic topicInstance = Topic.get(params.id)
         if (topicInstance) {
             try {
                 topicInstance.delete(flush: true)

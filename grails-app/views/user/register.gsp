@@ -111,55 +111,52 @@
             <span class="button"><g:submitButton name="create" class="save"
                                                  value="${message(code: 'default.button.create.label', default: 'Register')}"/></span>
         </div>
-
-        %{--<div class="demo">--}%
-
-            %{--<p>Date: <input id="datepicker" type="text"></p>--}%
-
-        %{--</div><!-- End demo -->--}%
     </g:form>
 </div>
-%{--<jq:jquery>--}%
-    %{--$("#registerForm").validate({--}%
-        %{--rules: {--}%
-            %{--password: "required",--}%
-            %{--confirmPassword: {--}%
-                %{--equalTo:"#password"--}%
-            %{--},--}%
-            %{--email: {--}%
-                %{--required: true,--}%
-                %{--email: true,--}%
-                %{--remote: "${createLink(controller: 'login', action: 'emailValidate')}"--}%
-            %{--}--}%
-        %{--},--}%
-        %{--messages: {--}%
-            %{--userName: {--}%
-                %{--required: "You must enter your User Name!",--}%
-                %{--minlength: "Your User Name must consist of atleast 5 characters!",--}%
-            %{--},--}%
-            %{--password: {--}%
-                %{--required: "You must enter your Password!",--}%
-                %{--minlength: "Your Password must consist of atleast 6 characters!",--}%
-            %{--},--}%
-            %{--confirmPassword: {--}%
-                %{--required: "You must Re-enter Password!",--}%
-                %{--minlength: "Your Password must consist of atleast 6 characters!",--}%
-            %{--},--}%
-            %{--email: {--}%
-                %{--required: "You must enter your e-mail!",--}%
-                %{--remote: "User with this e-mail address already exist.!"--}%
-            %{--},--}%
-            %{--address: {--}%
-                %{--required: "You must enter your Address!",--}%
-            %{--},--}%
-            %{--phoneNumber: {--}%
-                %{--required: "You must enter your Phone Number!",--}%
-            %{--}--}%
-        %{--}--}%
+<jq:jquery>
+    $("#registerForm").validate({
+        rules: {
+            userName: {
+                required: true,
+                remote: "${createLink(controller: "user", action: 'userNameValidate')}"
+            },
+            password: "required",
+            confirmPassword: {
+                equalTo:"#password"
+            },
+            email: {
+                required: true,
+                email: true,
+                remote: "${createLink(controller: 'user', action: 'emailValidate')}"
+            }
+        },
+        messages: {
+            userName: {
+                required: "You must enter your User Name!",
+                minlength: "Your User Name must consist of atleast 5 characters!",
+                remote: "User Name already exist!"
+            },
+            password: {
+                required: "You must enter your Password!",
+                minlength: "Your Password must consist of atleast 6 characters!",
+            },
+            confirmPassword: {
+                required: "You must Re-enter Password!",
+                minlength: "Your Password must consist of atleast 6 characters!",
+            },
+            email: {
+                required: "You must enter your e-mail!",
+                remote: "User with this e-mail address already exist!",
+            },
+            address: {
+                required: "You must enter your Address!",
+            },
+            phoneNumber: {
+                required: "You must enter your Phone Number!",
+            }
+        }
 
-    %{--});--}%
-    %{--$( "#datepicker" ).datepicker();--}%
-
-%{--</jq:jquery>--}%
+    });
+</jq:jquery>
 </body>
 </html>

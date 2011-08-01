@@ -21,8 +21,6 @@ class LoginControllerSpec extends ControllerSpec {
         redirectArgs.controller == controllerName
         redirectArgs.action == actionName
         mockSession.currentUser == userId
-        println user1.name
-        println user2.name
 
         where:
         sno | name    | password   | controllerName | actionName  | userId

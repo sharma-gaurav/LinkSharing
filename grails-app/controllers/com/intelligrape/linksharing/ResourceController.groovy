@@ -14,13 +14,13 @@ class ResourceController {
     }
 
     def create = {
-        def resourceInstance = new Resource()
+        Resource resourceInstance = new Resource()
         resourceInstance.properties = params
         return [resourceInstance: resourceInstance]
     }
 
     def save = {
-        def resourceInstance = new Resource(params)
+        Resource resourceInstance = new Resource(params)
         if (resourceInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'resource.label', default: 'Resource'), resourceInstance.id])}"
             redirect(action: "show", id: resourceInstance.id)
@@ -31,29 +31,29 @@ class ResourceController {
     }
 
     def show = {
-        def resourceInstance = Resource.get(params.id)
-        if (!resourceInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'resource.label', default: 'Resource'), params.id])}"
-            redirect(action: "list")
+        Resource resourceInstance = Resource.get(params.id)
+        if (resourceInstance) {
+            [resourceInstance: resourceInstance]
         }
         else {
-            [resourceInstance: resourceInstance]
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'resource.label', default: 'Resource'), params.id])}"
+            redirect(action: "list")
         }
     }
 
     def edit = {
-        def resourceInstance = Resource.get(params.id)
-        if (!resourceInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'resource.label', default: 'Resource'), params.id])}"
-            redirect(action: "list")
+        Resource resourceInstance = Resource.get(params.id)
+        if (resourceInstance) {
+            return [resourceInstance: resourceInstance]
         }
         else {
-            return [resourceInstance: resourceInstance]
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'resource.label', default: 'Resource'), params.id])}"
+            redirect(action: "list")
         }
     }
 
     def update = {
-        def resourceInstance = Resource.get(params.id)
+        Resource resourceInstance = Resource.get(params.id)
         if (resourceInstance) {
             if (params.version) {
                 def version = params.version.toLong()
@@ -80,7 +80,7 @@ class ResourceController {
     }
 
     def delete = {
-        def resourceInstance = Resource.get(params.id)
+        Resource resourceInstance = Resource.get(params.id)
         if (resourceInstance) {
             try {
                 resourceInstance.delete(flush: true)

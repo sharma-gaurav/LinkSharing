@@ -8,14 +8,6 @@
 
 
 <body>
-%{--<div>--}%
-    %{--<input type="button" id="Time" name="Time" value="Get Time"/>--}%
-%{--</div>--}%
-
-<div id="test">
-
-</div>
-
 <g:if test="${flash.message}">
     <div class="message">${flash.message}</div>
 </g:if>
@@ -29,30 +21,9 @@
             <tr><td></td><td><input type="submit" name="Submit" value="Sign In"/></td></tr>
         </table>
     </div>
-
-
-
     <br>
     <g:link controller='user' action='register'>Register New User</g:link>
 </g:form>
-<jq:jquery>
-%{--function updateDateTime(){--}%
-%{--jQuery.ajax({--}%
-%{--'url' : "${createLink(controller: 'login', action: 'dateGetter')}",--}%
-%{--'success': function(data){--}%
-%{--console.debug(data)--}%
-%{--jQuery("#test").text(data.message)--}%
-%{--})--}%
-%{--var name = $("input[name=userName]").val()--}%
 
-%{--function checkLogin(){--}%
-%{--x=$("#formId").serialize()--}%
-%{--console.debug(x)--}%
-%{--jQuery.get("${createLink(controller: 'login', action: 'dateGetter')}",x, function(data){--}%
-%{--jQuery("#test").text(data.message)--}%
-%{--})--}%
-%{--}--}%
-%{--$('#Time').click(checkLogin)--}%
-</jq:jquery>
 </body>
 </html>

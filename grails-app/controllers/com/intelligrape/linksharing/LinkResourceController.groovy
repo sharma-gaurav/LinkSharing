@@ -20,7 +20,7 @@ class LinkResourceController {
     }
 
     def save = {
-        def linkResourceInstance = new LinkResource(params)
+        LinkResource linkResourceInstance = new LinkResource(params)
         if (linkResourceInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'linkResource.label', default: 'LinkResource'), linkResourceInstance.id])}"
             redirect(action: "show", id: linkResourceInstance.id)
@@ -31,29 +31,29 @@ class LinkResourceController {
     }
 
     def show = {
-        def linkResourceInstance = LinkResource.get(params.id)
-        if (!linkResourceInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'linkResource.label', default: 'LinkResource'), params.id])}"
-            redirect(action: "list")
+        LinkResource linkResourceInstance = LinkResource.get(params.id)
+        if (linkResourceInstance) {
+            [linkResourceInstance: linkResourceInstance]
         }
         else {
-            [linkResourceInstance: linkResourceInstance]
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'linkResource.label', default: 'LinkResource'), params.id])}"
+            redirect(action: "list")
         }
     }
 
     def edit = {
-        def linkResourceInstance = LinkResource.get(params.id)
-        if (!linkResourceInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'linkResource.label', default: 'LinkResource'), params.id])}"
-            redirect(action: "list")
+        LinkResource linkResourceInstance = LinkResource.get(params.id)
+        if (linkResourceInstance) {
+            return [linkResourceInstance: linkResourceInstance]
         }
         else {
-            return [linkResourceInstance: linkResourceInstance]
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'linkResource.label', default: 'LinkResource'), params.id])}"
+            redirect(action: "list")
         }
     }
 
     def update = {
-        def linkResourceInstance = LinkResource.get(params.id)
+        LinkResource linkResourceInstance = LinkResource.get(params.id)
         if (linkResourceInstance) {
             if (params.version) {
                 def version = params.version.toLong()
@@ -80,7 +80,7 @@ class LinkResourceController {
     }
 
     def delete = {
-        def linkResourceInstance = LinkResource.get(params.id)
+        LinkResource linkResourceInstance = LinkResource.get(params.id)
         if (linkResourceInstance) {
             try {
                 linkResourceInstance.delete(flush: true)

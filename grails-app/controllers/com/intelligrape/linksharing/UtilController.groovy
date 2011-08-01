@@ -8,33 +8,19 @@ class UtilController {
 
     def QuartzScheduler
     def index = {
-        User user1 = new User(userName: "test122", password: "password", confirmPassword: "password", name: "Gaurav",             \
-                             phoneNumber: 123456789, address: "new delhi", email: "111@xyz.com")
-        User user2 = new User(userName: "test222", password: "password", confirmPassword: "password", name: "Charu",             \
-                             phoneNumber: 123456789, address: "new delhi", email: "2222@def.com")
-        if (user1.validate()) {
-            user1.save(flush: true, validate: false)
+        User user1 = new User(userName: "test122", password: "password", confirmPassword: "password", name: "Gaurav",              \
+                              phoneNumber: 123456789, address: "new delhi", email: "111@xyz.com")
+        User user2 = new User(userName: "test222", password: "password", confirmPassword: "password", name: "Charu",              \
+                              phoneNumber: 123456789, address: "new delhi", email: "2222@def.com")
+        user1.save(flush: true)
 
-        }
-        else {
-            user1.errors.allErrors.each {
-                println it
-            }
-        }
         user2.save(flush: true)
-        user2.errors.allErrors.each {
-            println it
-        }
         Topic topic1 = new Topic(isPrivate: false, createdBy: user2, name: "Grails")
         Topic topic2 = new Topic(isPrivate: false, createdBy: user2, name: "ADA")
         topic1.save(flush: true)
-        topic1.errors.allErrors.each {
-            println it
-        }
+
         topic2.save(flush: true)
-        topic2.errors.allErrors.each {
-            println it
-        }
+
 
         UserTopic userTopic = new UserTopic(user: user2, topic: topic1)
         userTopic.save()
@@ -45,8 +31,8 @@ class UtilController {
     def createResources = {
         Topic.list().each {Topic topic ->
             (1..10).each {
-                topic.addToResources(new LinkResource(topic: topic, createdBy: User.get(1), heading: "Grails Heading",           \
-                   summary: "Grails summary", url: "http://www.google.com"))
+                topic.addToResources(new LinkResource(topic: topic, createdBy: User.get(1), heading: "Grails Heading",            \
+                    summary: "Grails summary", url: "http://www.google.com"))
             }
         }
     }
@@ -64,19 +50,9 @@ class UtilController {
             userResource.isRead = false
         }
     }
-    def printUnread = {
-        UserResource.findAllByIsReadAndUser(false, User.get(1)).each {
-            println it.resource;
-        }
-    }
-    def triggerJob = {
-        try {
-            MyJob.triggerNow()
 
-        } catch (ThreadDeath th) {
-            println("Error occured ")
-        }
-//        quartzScheduler.resumeAll()
+    def triggerJob = {
+        MyJob.triggerNow()
         render "Job Triggered 1"
     }
 

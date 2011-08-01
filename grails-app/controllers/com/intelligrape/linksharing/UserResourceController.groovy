@@ -14,13 +14,13 @@ class UserResourceController {
     }
 
     def create = {
-        def userResourceInstance = new UserResource()
+        UserResource userResourceInstance = new UserResource()
         userResourceInstance.properties = params
         return [userResourceInstance: userResourceInstance]
     }
 
     def save = {
-        def userResourceInstance = new UserResource(params)
+        UserResource userResourceInstance = new UserResource(params)
         if (userResourceInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'userResource.label', default: 'UserResource'), userResourceInstance.id])}"
             redirect(action: "show", id: userResourceInstance.id)
@@ -31,29 +31,29 @@ class UserResourceController {
     }
 
     def show = {
-        def userResourceInstance = UserResource.get(params.id)
-        if (!userResourceInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'userResource.label', default: 'UserResource'), params.id])}"
-            redirect(action: "list")
+        UserResource userResourceInstance = UserResource.get(params.id)
+        if (userResourceInstance) {
+            [userResourceInstance: userResourceInstance]
         }
         else {
-            [userResourceInstance: userResourceInstance]
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'userResource.label', default: 'UserResource'), params.id])}"
+            redirect(action: "list")
         }
     }
 
     def edit = {
-        def userResourceInstance = UserResource.get(params.id)
-        if (!userResourceInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'userResource.label', default: 'UserResource'), params.id])}"
-            redirect(action: "list")
+        UserResource userResourceInstance = UserResource.get(params.id)
+        if (userResourceInstance) {
+            return [userResourceInstance: userResourceInstance]
         }
         else {
-            return [userResourceInstance: userResourceInstance]
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'userResource.label', default: 'UserResource'), params.id])}"
+            redirect(action: "list")
         }
     }
 
     def update = {
-        def userResourceInstance = UserResource.get(params.id)
+        UserResource userResourceInstance = UserResource.get(params.id)
         if (userResourceInstance) {
             if (params.version) {
                 def version = params.version.toLong()
@@ -80,7 +80,7 @@ class UserResourceController {
     }
 
     def delete = {
-        def userResourceInstance = UserResource.get(params.id)
+        UserResource userResourceInstance = UserResource.get(params.id)
         if (userResourceInstance) {
             try {
                 userResourceInstance.delete(flush: true)

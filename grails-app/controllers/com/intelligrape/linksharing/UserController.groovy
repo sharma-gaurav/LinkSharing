@@ -1,8 +1,8 @@
 package com.intelligrape.linksharing
 
-import org.hibernate.criterion.Projection
-
 class UserController {
+
+    def populateListService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -16,13 +16,13 @@ class UserController {
     }
 
     def create = {
-        def userInstance = new User()
+        User userInstance = new User()
         userInstance.properties = params
         return [userInstance: userInstance]
     }
 
     def save = {
-        def userInstance = new User(params)
+        User userInstance = new User(params)
         if (userInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])}"
             redirect(action: "show", id: userInstance.id)
@@ -33,29 +33,29 @@ class UserController {
     }
 
     def show = {
-        def userInstance = User.get(params.id)
-        if (!userInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), params.id])}"
-            redirect(action: "list")
+        User userInstance = User.get(params.id)
+        if (userInstance) {
+            [userInstance: userInstance]
         }
         else {
-            [userInstance: userInstance]
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), params.id])}"
+            redirect(action: "list")
         }
     }
 
     def edit = {
-        def userInstance = User.get(params.id)
-        if (!userInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), params.id])}"
-            redirect(action: "list")
+        User userInstance = User.get(params.id)
+        if (userInstance) {
+            return [userInstance: userInstance]
         }
         else {
-            return [userInstance: userInstance]
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), params.id])}"
+            redirect(action: "list")
         }
     }
 
     def update = {
-        def userInstance = User.get(params.id)
+        User userInstance = User.get(params.id)
         if (userInstance) {
             if (params.version) {
                 def version = params.version.toLong()
@@ -82,7 +82,7 @@ class UserController {
     }
 
     def delete = {
-        def userInstance = User.get(params.id)
+        User userInstance = User.get(params.id)
         if (userInstance) {
             try {
                 userInstance.delete(flush: true)
@@ -117,32 +117,53 @@ class UserController {
     }
 
     def dashboard = {
-        params.max = Math.min(params.max ? params.int('max') : 5, 100)
         User user = User.get(session.currentUser)
-        List<UserResource> resources = user.resources as List
+        [user1: user]
+    }
+
+    def topicList = {
+        User user = User.get(session.currentUser)
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
         List<UserTopic> topics = UserTopic.findAllByUser(user, params)
         Integer topicCount = UserTopic.countByUser(user)
+        render(template: "topicListTemplate", model: [topicsList: topics, topicListTotal: topicCount])
 
-        def topicList = UserTopic.createCriteria().list() {
-            projections {
-                groupProperty("topic")
-                count("user")
-            }
-            'topic' {
-                eq('isPrivate', false)
-            }
+    }
+
+    def readResourceList = {
+        User user = User.get(session.currentUser)
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        List<UserResource> resources = UserResource.findAllByUserAndIsRead(user, false, [max: params.max, offset: params.offset])
+        Integer resourceListTotal = UserResource.countByUserAndIsRead(user, false)
+        render(template: "resourceListTemplate", model: [resources: resources, resourceListTotal: resourceListTotal])
+    }
+
+    def mostSubscribedTopicList = {
+        List<List> mostSubscribedTopics = populateListService.topicList(params.max ? params.int('max') : 10, params.offset ? params.int("offset") : 0)
+        Integer mostSubscribedTopicsTotal = populateListService.topicListTotal()
+        render(template: "mostSubscribedTopicListTemplate", model: [mostSubscribedTopics: mostSubscribedTopics, mostSubscribedTopicsTotal: mostSubscribedTopicsTotal])
+    }
+
+    def mostReadResourceList = {
+        List<List> mostReadResources = populateListService.resourceList(params.max ? params.int('max') : 10, params.offset ? params.int("offset") : 0)
+        Integer mostReadResourcesTotal = populateListService.resourceListTotal()
+        render(template: "mostReadResourceListTemplate", model: [mostReadResources: mostReadResources, mostReadResourcesTotal: mostReadResourcesTotal])
+    }
+    def emailValidate = {
+        User user = User.findByEmail(params.email)
+        if (user) {
+            render "false"
+        } else {
+            render "true"
         }
-        topicList = topicList.sort {it.last()}.reverse()
+    }
 
-        def mostRead = UserResource.createCriteria().list() {
-            projections {
-                groupProperty("resource")
-                count("user")
-            }
-            eq('isRead', true)
+    def userNameValidate = {
+        User user = User.findByUserName(params.userName)
+        if (user) {
+            render "false"
+        } else {
+            render "true"
         }
-        mostRead = mostRead.sort {it.last()}.reverse()
-
-        [user1: user, resourceList: resources.findAll {!it.isRead}, topicsList: topics, topicListTotal: topicCount, topicList: topicList, mostRead: mostRead]
     }
 }

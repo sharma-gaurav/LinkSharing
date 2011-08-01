@@ -12,8 +12,6 @@ class MailingService {
             invitation.topic = Topic.get(topic)
             invitation.save(flush: true)
 
-            println invitation.from.name
-            println invitation.to.email
             if (invitation) {
                 sendMail {
                     to invitation.to?.email

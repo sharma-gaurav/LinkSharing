@@ -16,7 +16,7 @@ class UserTopicController {
     }
 
     def create = {
-        def userTopicInstance = new UserTopic()
+        UserTopic userTopicInstance = new UserTopic()
         userTopicInstance.properties = params
         return [userTopicInstance: userTopicInstance]
     }
@@ -33,29 +33,30 @@ class UserTopicController {
     }
 
     def show = {
-        def userTopicInstance = UserTopic.get(params.id)
-        if (!userTopicInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'userTopic.label', default: 'UserTopic'), params.id])}"
-            redirect(action: "list")
+        UserTopic userTopicInstance = UserTopic.get(params.id)
+        if (userTopicInstance) {
+            [userTopicInstance: userTopicInstance]
         }
         else {
-            [userTopicInstance: userTopicInstance]
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'userTopic.label', default: 'UserTopic'), params.id])}"
+            redirect(action: "list")
+
         }
     }
 
     def edit = {
-        def userTopicInstance = UserTopic.get(params.id)
-        if (!userTopicInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'userTopic.label', default: 'UserTopic'), params.id])}"
-            redirect(action: "list")
+        UserTopic userTopicInstance = UserTopic.get(params.id)
+        if (userTopicInstance) {
+            return [userTopicInstance: userTopicInstance]
         }
         else {
-            return [userTopicInstance: userTopicInstance]
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'userTopic.label', default: 'UserTopic'), params.id])}"
+            redirect(action: "list")
         }
     }
 
     def update = {
-        def userTopicInstance = UserTopic.get(params.id)
+        UserTopic userTopicInstance = UserTopic.get(params.id)
         if (userTopicInstance) {
             if (params.version) {
                 def version = params.version.toLong()
@@ -82,7 +83,7 @@ class UserTopicController {
     }
 
     def delete = {
-        def userTopicInstance = UserTopic.get(params.id)
+        UserTopic userTopicInstance = UserTopic.get(params.id)
         if (userTopicInstance) {
             try {
                 userTopicInstance.delete(flush: true)

@@ -15,13 +15,13 @@ class InvitationController {
     }
 
     def create = {
-        def invitationInstance = new Invitation()
+        Invitation invitationInstance = new Invitation()
         invitationInstance.properties = params
         return [invitationInstance: invitationInstance]
     }
 
     def save = {
-        def invitationInstance = new Invitation(params)
+        Invitation invitationInstance = new Invitation(params)
         if (invitationInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'invitation.label', default: 'Invitation'), invitationInstance.id])}"
             redirect(action: "show", id: invitationInstance.id)
@@ -32,24 +32,24 @@ class InvitationController {
     }
 
     def show = {
-        def invitationInstance = Invitation.get(params.id)
-        if (!invitationInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'invitation.label', default: 'Invitation'), params.id])}"
-            redirect(action: "list")
+        Invitation invitationInstance = Invitation.get(params.id)
+        if (invitationInstance) {
+            [invitationInstance: invitationInstance]
         }
         else {
-            [invitationInstance: invitationInstance]
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'invitation.label', default: 'Invitation'), params.id])}"
+            redirect(action: "list")
         }
     }
 
     def edit = {
         def invitationInstance = Invitation.get(params.id)
-        if (!invitationInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'invitation.label', default: 'Invitation'), params.id])}"
-            redirect(action: "list")
+        if (invitationInstance) {
+            return [invitationInstance: invitationInstance]
         }
         else {
-            return [invitationInstance: invitationInstance]
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'invitation.label', default: 'Invitation'), params.id])}"
+            redirect(action: "list")
         }
     }
 
@@ -100,23 +100,18 @@ class InvitationController {
     }
 
     def send = {
-
         Topic topicToSend = Topic.get(params.id)
         User sender = User.get(session.currentUser);
-
         [from: sender, topic: topicToSend]
     }
 
-    def sendHandler = {SendCommand cmd ->
-        println "Into the send handler ${cmd.from}"
+    def sendHandler = {SendCO cmd ->
         if (cmd.from) {
-            println "Into if"
-//            mailingService.sendInvitation(cmd.tos,cmd.from,cmd.topic)
+            mailingService.sendInvitation(cmd.tos, cmd.from, cmd.topic)
             render "mail sent"
 
         }
         else {
-            println "into else"
             render "Mail not send."
         }
     }

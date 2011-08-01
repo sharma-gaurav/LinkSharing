@@ -7,8 +7,6 @@ class MyJob {
     }
 
     def execute() {
-        //  println context.mergedJobDataMap.get('foo')
-        println "dshdhsjhsjdsjdj"
     }
 }
 

@@ -14,13 +14,13 @@ class DocumentResourceController {
     }
 
     def create = {
-        def documentResourceInstance = new DocumentResource()
+        DocumentResource documentResourceInstance = new DocumentResource()
         documentResourceInstance.properties = params
         return [documentResourceInstance: documentResourceInstance]
     }
 
     def save = {
-        def documentResourceInstance = new DocumentResource(params)
+        DocumentResource documentResourceInstance = new DocumentResource(params)
         if (documentResourceInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'documentResource.label', default: 'DocumentResource'), documentResourceInstance.id])}"
             redirect(action: "show", id: documentResourceInstance.id)
@@ -31,29 +31,29 @@ class DocumentResourceController {
     }
 
     def show = {
-        def documentResourceInstance = DocumentResource.get(params.id)
-        if (!documentResourceInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'documentResource.label', default: 'DocumentResource'), params.id])}"
-            redirect(action: "list")
+        DocumentResource documentResourceInstance = DocumentResource.get(params.id)
+        if (documentResourceInstance) {
+            [documentResourceInstance: documentResourceInstance]
         }
         else {
-            [documentResourceInstance: documentResourceInstance]
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'documentResource.label', default: 'DocumentResource'), params.id])}"
+            redirect(action: "list")
         }
     }
 
     def edit = {
-        def documentResourceInstance = DocumentResource.get(params.id)
-        if (!documentResourceInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'documentResource.label', default: 'DocumentResource'), params.id])}"
-            redirect(action: "list")
+        DocumentResource documentResourceInstance = DocumentResource.get(params.id)
+        if (documentResourceInstance) {
+            return [documentResourceInstance: documentResourceInstance]
         }
         else {
-            return [documentResourceInstance: documentResourceInstance]
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'documentResource.label', default: 'DocumentResource'), params.id])}"
+            redirect(action: "list")
         }
     }
 
     def update = {
-        def documentResourceInstance = DocumentResource.get(params.id)
+        DocumentResource documentResourceInstance = DocumentResource.get(params.id)
         if (documentResourceInstance) {
             if (params.version) {
                 def version = params.version.toLong()
@@ -80,7 +80,7 @@ class DocumentResourceController {
     }
 
     def delete = {
-        def documentResourceInstance = DocumentResource.get(params.id)
+        DocumentResource documentResourceInstance = DocumentResource.get(params.id)
         if (documentResourceInstance) {
             try {
                 documentResourceInstance.delete(flush: true)

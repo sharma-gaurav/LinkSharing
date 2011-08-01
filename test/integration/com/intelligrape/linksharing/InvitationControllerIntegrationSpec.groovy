@@ -1,7 +1,6 @@
 package com.intelligrape.linksharing
 
 import grails.plugin.spock.IntegrationSpec
-import com.sun.servicetag.SystemEnvironment
 
 class InvitationControllerIntegrationSpec extends IntegrationSpec {
 
@@ -20,7 +19,7 @@ class InvitationControllerIntegrationSpec extends IntegrationSpec {
     def "test the sendHandler mailing action"() {
         setup:
         controller.mailingService = mailingService
-        SendCommand sendCommand = new SendCommand()
+        SendCO sendCommand = new SendCO()
 
         when:
         sendCommand.tos = ["gauravs@intelligrape.com"]
@@ -34,7 +33,7 @@ class InvitationControllerIntegrationSpec extends IntegrationSpec {
 
     def "test the error condition in sendHandler"() {
         setup:
-        SendCommand sendCommand = new SendCommand()
+        SendCO sendCommand = new SendCO()
 
         when:
         sendCommand.tos = ["gauravs@intelligrape.com"]
