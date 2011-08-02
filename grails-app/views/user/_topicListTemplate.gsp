@@ -9,7 +9,8 @@
         </tr>
     </g:each>
 </table>
+
 <div class="paginateButtons">
-<util:remotePaginate controller="user" action="topicList" total="${topicListTotal}"
-                     update="topicListTemplateDivId" max="10" pageSizes="[10, 20, 50,100]"/>
+    <util:remotePaginate controller="user" action="topicList" total="${topicListTotal}"
+                         update="topicListTemplateDivId" max="10" pageSizes="[10, 20, 50,100]"/>
 </div>
