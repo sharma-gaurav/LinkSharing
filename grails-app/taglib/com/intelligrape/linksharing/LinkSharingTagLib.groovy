@@ -36,4 +36,10 @@ class LinkSharingTagLib {
             out << body()
         }
     }
+    def ifRead = {attrs, body ->
+        UserResource userResource = UserResource.findByUserAndResource(User.get(session.currentUser), attrs['resource'])
+        if (userResource.isRead) {
+            out << body()
+        }
+    }
 }

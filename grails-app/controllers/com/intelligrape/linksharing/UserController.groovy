@@ -145,8 +145,9 @@ class UserController {
     }
 
     def mostReadResourceList = {
-        List<List> mostReadResources = populateListService.resourceList(params.max ? params.int('max') : 10, params.offset ? params.int("offset") : 0)
-        Integer mostReadResourcesTotal = populateListService.resourceListTotal()
+        User user = User.get(session.currentUser)
+        List<List> mostReadResources = populateListService.resourceList(params.max ? params.int('max') : 10, params.offset ? params.int("offset") : 0, user)
+        Integer mostReadResourcesTotal = populateListService.resourceListTotal(user)
         render(template: "mostReadResourceListTemplate", model: [mostReadResources: mostReadResources, mostReadResourcesTotal: mostReadResourcesTotal])
     }
     def emailValidate = {

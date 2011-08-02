@@ -97,4 +97,19 @@ class LinkResourceController {
             redirect(action: "list")
         }
     }
+
+    def markUnread = {
+        println params?.id
+        Resource resourceInstance = Resource.get(params.id)
+        UserResource userResourceInstance = UserResource?.findByResourceAndUser(resourceInstance, User.get(session.currentUser))
+        if (userResourceInstance) {
+            userResourceInstance.isRead = false
+            userResourceInstance.save(flush: true)
+            redirect(controller:"user", action: "dashboard", id: "${params.id}")
+        }
+        else {
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'resource.label', default: 'Resource'), params.id])}"
+            redirect(action: "list")
+        }
+    }
 }

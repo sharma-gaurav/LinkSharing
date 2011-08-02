@@ -32,7 +32,7 @@ class ResourceController {
 
     def show = {
         Resource resourceInstance = Resource.get(params.id)
-        UserResource userResourceInstance = UserResource?.findByResourceAndUser(resourceInstance,User.get(session.currentUser))
+        UserResource userResourceInstance = UserResource?.findByResourceAndUser(resourceInstance, User.get(session.currentUser))
         if (resourceInstance) {
             userResourceInstance?.isRead = true
             userResourceInstance.save(flush: true)
@@ -94,6 +94,21 @@ class ResourceController {
                 flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'resource.label', default: 'Resource'), params.id])}"
                 redirect(action: "show", id: params.id)
             }
+        }
+        else {
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'resource.label', default: 'Resource'), params.id])}"
+            redirect(action: "list")
+        }
+    }
+
+    def markUnread = {
+        println params?.id
+        Resource resourceInstance = Resource.get(params.id)
+        UserResource userResourceInstance = UserResource?.findByResourceAndUser(resourceInstance, User.get(session.currentUser))
+        if (userResourceInstance) {
+            userResourceInstance.isRead = false
+            userResourceInstance.save(flush: true)
+            redirect(controller: "user", action:"dashboard", id:"${params.id}")
         }
         else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'resource.label', default: 'Resource'), params.id])}"

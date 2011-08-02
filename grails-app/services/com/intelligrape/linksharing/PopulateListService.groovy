@@ -22,7 +22,7 @@ class PopulateListService {
         return topicList
     }
 
-    def topicListTotal () {
+    def topicListTotal() {
         Integer mostSubscribedTopicsTotal = UserTopic.createCriteria().get {
             projections {
                 countDistinct("topic")
@@ -34,13 +34,18 @@ class PopulateListService {
         return mostSubscribedTopicsTotal
     }
 
-    def resourceList(Integer max, Integer offset) {
+    def resourceList(Integer max, Integer offset, User user) {
         offset = offset ?: 0
         max = Math.min(max ? max : 10, 100)
+        List<Topic> topics = UserTopic.findAllByUser(user)*.topic
+        println topics*.name
         List<List> mostReadResources = UserResource.createCriteria().list() {
             projections {
                 groupProperty("resource")
                 count("user")
+            }
+            resource {
+                inList("topic", topics)
             }
             eq('isRead', true)
             maxResults(max)
@@ -50,10 +55,15 @@ class PopulateListService {
         return mostReadResources
     }
 
-    def resourceListTotal() {
+    def resourceListTotal(User user) {
+        println user
+        List<Topic> topics = UserTopic.findAllByUser(user)*.topic
         Integer mostReadResourcesTotal = UserResource.createCriteria().get {
             projections {
                 countDistinct("resource")
+            }
+            resource {
+                inList("topic", topics)
             }
             eq('isRead', true)
         }
