@@ -38,7 +38,6 @@ class PopulateListService {
         offset = offset ?: 0
         max = Math.min(max ? max : 10, 100)
         List<Topic> topics = UserTopic.findAllByUser(user)*.topic
-        println topics*.name
         List<List> mostReadResources = UserResource.createCriteria().list() {
             projections {
                 groupProperty("resource")
@@ -56,7 +55,6 @@ class PopulateListService {
     }
 
     def resourceListTotal(User user) {
-        println user
         List<Topic> topics = UserTopic.findAllByUser(user)*.topic
         Integer mostReadResourcesTotal = UserResource.createCriteria().get {
             projections {

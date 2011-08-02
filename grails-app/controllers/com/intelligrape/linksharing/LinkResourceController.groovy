@@ -99,7 +99,6 @@ class LinkResourceController {
     }
 
     def markUnread = {
-        println params?.id
         Resource resourceInstance = Resource.get(params.id)
         UserResource userResourceInstance = UserResource?.findByResourceAndUser(resourceInstance, User.get(session.currentUser))
         if (userResourceInstance) {
