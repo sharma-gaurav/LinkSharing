@@ -19,6 +19,6 @@
     </tbody>
 </table>
 <div class="paginateButtons">
-<util:remotePaginate controller="user" action="readResourceList" total="${resourceListTotal}"
+<util:remotePaginate controller="user" action="unreadResourceList" total="${resourceListTotal}"
                      update="resourceListTemplateDivId" max="10" pageSizes="[10, 20, 50,100]"/>
 </div>

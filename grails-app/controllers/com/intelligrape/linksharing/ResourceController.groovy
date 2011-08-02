@@ -32,7 +32,10 @@ class ResourceController {
 
     def show = {
         Resource resourceInstance = Resource.get(params.id)
+        UserResource userResourceInstance = UserResource?.findByResourceAndUser(resourceInstance,User.get(session.currentUser))
         if (resourceInstance) {
+            userResourceInstance?.isRead = true
+            userResourceInstance.save(flush: true)
             [resourceInstance: resourceInstance]
         }
         else {

@@ -7,7 +7,7 @@ class PopulateListService {
     def topicList(Integer max, Integer offset) {
         offset = offset ?: 0
         max = Math.min(max ? max : 10, 100)
-        def topicList = UserTopic.createCriteria().list() {
+        List<List> topicList = UserTopic.createCriteria().list() {
             projections {
                 groupProperty("topic")
                 count("user")

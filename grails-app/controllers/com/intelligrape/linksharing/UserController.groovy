@@ -130,7 +130,7 @@ class UserController {
 
     }
 
-    def readResourceList = {
+    def unreadResourceList = {
         User user = User.get(session.currentUser)
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         List<UserResource> resources = UserResource.findAllByUserAndIsRead(user, false, [max: params.max, offset: params.offset])

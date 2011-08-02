@@ -26,7 +26,7 @@
 
         <div id="tabs-1">
             <div id="resourceListTemplateDivId">
-                <g:include controller="user" action="readResourceList"/>
+                <g:include controller="user" action="unreadResourceList"/>
             </div>
         </div>
 
