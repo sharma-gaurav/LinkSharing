@@ -68,15 +68,16 @@
     <div class="buttons">
         <g:form>
             <g:hiddenField name="id" value="${resourceInstance?.id}"/>
-            <ls:ifCurrentUser id="${resourceInstance?.createdBy?.id}">
+            <ls:ifCurrentUserOrAdmin id="${resourceInstance?.createdBy?.id}">
                 <span class="button"><g:actionSubmit class="edit" action="edit"
                                                      value="${message(code: 'default.button.edit.label', default: 'Edit')}"/></span>
                 <span class="button"><g:actionSubmit class="delete" action="delete"
                                                      value="${message(code: 'default.button.delete.label', default: 'Delete')}"
                                                      onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/></span>
-            </ls:ifCurrentUser>
+            </ls:ifCurrentUserOrAdmin>
             <ls:ifRead resource="${resourceInstance}">
-                <span class="button"><g:actionSubmit action="markUnread" value="Mark Unread" onclick="return alert('Resource Marked Unread')"/></span>
+                <span class="button"><g:actionSubmit action="markUnread" value="Mark Unread"
+                                                     onclick="return alert('Resource Marked Unread')"/></span>
             </ls:ifRead>
 
         </g:form>

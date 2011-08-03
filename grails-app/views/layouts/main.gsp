@@ -21,9 +21,16 @@
 
 <div class="nav">
     <g:form controller="topic" action="list">
-        <span class="menuButton"><a class="home" href="${createLink(uri: '/user/dashboard')}"><g:message
-                code="default.home.label"/></a>
-        </span>
+        <ls:isUser>
+            <span class="menuButton"><a class="home" href="${createLink(uri: '/user/dashboard')}"><g:message
+                    code="default.home.label"/></a>
+            </span>
+        </ls:isUser>
+        <ls:isAdmin>
+            <span class="menuButton"><a class="home" href="${createLink(uri: '/admin/stats')}"><g:message
+                    code="default.home.label"/></a>
+            </span>
+        </ls:isAdmin>
         <span class="menuButton"><g:link controller="topic" action="create">Create New Topic</g:link></span>
         <span class="menuButton"><g:link controller="login" action="logout">Logout</g:link></span> |
         <span class="menuButton">Today's Date: <ls:myDateFormat date="${new Date()}"/></span>

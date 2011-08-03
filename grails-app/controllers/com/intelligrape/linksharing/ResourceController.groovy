@@ -34,8 +34,10 @@ class ResourceController {
         Resource resourceInstance = Resource.get(params.id)
         UserResource userResourceInstance = UserResource?.findByResourceAndUser(resourceInstance, User.get(session.currentUser))
         if (resourceInstance) {
-            userResourceInstance?.isRead = true
-            userResourceInstance.save(flush: true)
+            if (!User.get(session.currentUser).isAdmin) {
+                userResourceInstance?.isRead = true
+                userResourceInstance.save(flush: true)
+            }
             [resourceInstance: resourceInstance]
         }
         else {
@@ -107,7 +109,7 @@ class ResourceController {
         if (userResourceInstance) {
             userResourceInstance.isRead = false
             userResourceInstance.save(flush: true)
-            redirect(controller: "user", action:"dashboard", id:"${params.id}")
+            redirect(controller: "user", action: "dashboard", id: "${params.id}")
         }
         else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'resource.label', default: 'Resource'), params.id])}"

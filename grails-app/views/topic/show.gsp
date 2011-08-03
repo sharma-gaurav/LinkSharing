@@ -100,7 +100,7 @@
 
     <div class="buttons">
         <g:form>
-            <ls:ifCurrentUser id='${topicInstance?.createdBy?.id}'>
+            <ls:ifCurrentUserOrAdmin id='${topicInstance?.createdBy?.id}'>
                 <g:hiddenField name="id" value="${topicInstance?.id}"/>
                 <span class="button"><g:actionSubmit class="edit" action="edit"
                                                      value="${message(code: 'default.button.edit.label', default: 'Edit')}"/></span>
@@ -108,7 +108,7 @@
                 <span class="button"><g:actionSubmit class="delete" action="delete"
                                                      value="${message(code: 'default.button.delete.label', default: 'Delete')}"
                                                      onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/></span>
-            </ls:ifCurrentUser>
+            </ls:ifCurrentUserOrAdmin>
             <g:link controller='invitation' action='send'
                     params="['id':topicInstance?.id]">Send Invitations</g:link>
 

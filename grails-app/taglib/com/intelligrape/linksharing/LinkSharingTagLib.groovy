@@ -24,8 +24,8 @@ class LinkSharingTagLib {
         out << User.get(session.currentUser).name
     }
 
-    def ifCurrentUser = {attrs, body ->
-        if (session?.currentUser == attrs['id']) {
+    def ifCurrentUserOrAdmin = {attrs, body ->
+        if (session?.currentUser == attrs['id'] || User.get(session?.currentUser)?.isAdmin) {
             out << body()
         }
     }
@@ -38,7 +38,21 @@ class LinkSharingTagLib {
     }
     def ifRead = {attrs, body ->
         UserResource userResource = UserResource.findByUserAndResource(User.get(session.currentUser), attrs['resource'])
-        if (userResource.isRead) {
+        if (!(User.get(session.currentUser).isAdmin) && userResource.isRead) {
+            out << body()
+        }
+    }
+
+    def isAdmin = {attrs, body ->
+        User user = User.get(session.currentUser)
+        if (user?.isAdmin) {
+            out << body()
+        }
+    }
+
+    def isUser = {
+        User user = User.get(session.currentUser)
+        if (!user?.isAdmin) {
             out << body()
         }
     }

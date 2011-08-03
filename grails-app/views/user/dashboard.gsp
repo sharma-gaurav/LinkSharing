@@ -21,7 +21,6 @@
             <li><a href="#tabs-2">Topics Subscribed:</a></li>
             <li><a href="#tabs-4">Most Read Resources:</a></li>
             <li><a href="#tabs-3">Most Subscribed Topics:</a></li>
-            <li></li>
         </ul>
 
         <div id="tabs-1">
