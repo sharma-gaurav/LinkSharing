@@ -8,14 +8,6 @@
 </head>
 
 <body>
-%{--<div class="nav">--}%
-%{--<span class="menuButton"><a class="home" href="${createLink(uri: '/user/dashboard')}"><g:message code="default.home.label"/></a>--}%
-%{--</span>--}%
-%{--<span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label"--}%
-%{--args="[entityName]"/></g:link></span>--}%
-%{--<span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label"--}%
-%{--args="[entityName]"/></g:link></span>--}%
-%{--</div>--}%
 
 <div class="body">
     <h1><g:message code="default.show.label" args="[entityName]"/></h1>
@@ -78,21 +70,6 @@
                 </td>
 
             </tr>
-
-            %{--<tr class="prop">--}%
-            %{--<td valign="top" class="name"><g:message code="topic.userTopics.label" default="Subscribed By"/></td>--}%
-
-            %{--<td valign="top" style="text-align: left;" class="value">--}%
-            %{--<ul>--}%
-            %{--<g:each in="${topicInstance.userTopics}" var="u">--}%
-            %{--<li>${u.user?.name}</li>--}%
-            %{--<li><g:link controller="userTopic" action="show"--}%
-            %{--id="${u.id}">${u.user?.name}</g:link></li>--}%
-            %{--</g:each>--}%
-            %{--</ul>--}%
-            %{--</td>--}%
-
-            %{--</tr>--}%
 
             </tbody>
         </table>
