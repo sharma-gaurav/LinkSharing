@@ -1,11 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: gaurav
-  Date: 20/7/11
-  Time: 12:44 PM
-  To change this template use File | Settings | File Templates.
---%>
-
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head><title>Send Invitation</title>

@@ -81,11 +81,7 @@ class BootstrapService {
         (1..3).each {
             UserResource userResource = UserResource.get(it)
             userResource.isRead = false
-        }
-    }
-
-    void printUnread() {
-        UserResource.findAllByIsReadAndUser(false, User.get(2)).each {
+            userResource.save(flush:true)
         }
     }
 }

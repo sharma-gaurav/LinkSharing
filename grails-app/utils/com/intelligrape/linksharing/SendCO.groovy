@@ -1,13 +1,7 @@
 package com.intelligrape.linksharing
 
-import org.codehaus.groovy.grails.web.converters.configuration.configtest
-import org.codehaus.groovy.grails.validation.Constraint
-
-
 class SendCO {
-    Long from
+    Long sendFromUserId
     List<String> tos
-    Long topic
-
-
+    Long topicId
 }

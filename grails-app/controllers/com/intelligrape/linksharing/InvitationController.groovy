@@ -106,10 +106,9 @@ class InvitationController {
     }
 
     def sendHandler = {SendCO cmd ->
-        if (cmd.from) {
-            mailingService.sendInvitation(cmd.tos, cmd.from, cmd.topic)
-            render "mail sent"
-
+        if (cmd.sendFromUserId) {
+            mailingService.sendInvitation(cmd.tos, cmd.sendFromUserId, cmd.topicId)
+            render "Mail sent"
         }
         else {
             render "Mail not send."
