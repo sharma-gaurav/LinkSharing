@@ -1,5 +1,7 @@
 package com.intelligrape.linksharing
 
+import org.codehaus.groovy.grails.commons.ConfigurationHolder
+
 class DocumentResourceController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -21,6 +23,8 @@ class DocumentResourceController {
 
     def save = {
         DocumentResource documentResourceInstance = new DocumentResource(params)
+        documentResourceInstance.document = params?.document
+
         if (documentResourceInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'documentResource.label', default: 'DocumentResource'), documentResourceInstance.id])}"
             redirect(action: "show", id: documentResourceInstance.id)
@@ -96,5 +100,14 @@ class DocumentResourceController {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'documentResource.label', default: 'DocumentResource'), params.id])}"
             redirect(action: "list")
         }
+    }
+
+    def download = {
+        DocumentResource documentResource = DocumentResource.get(params.id)
+        File file = new File("${ConfigurationHolder.config.path+documentResource.uuid}-${documentResource.fileName}")
+        response.setContentType("application/octet-stream")
+        response.setHeader("Content-disposition","filename=${documentResource.fileName}")
+        response.outputStream << file.bytes
+        render(view:"show")
     }
 }

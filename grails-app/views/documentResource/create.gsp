@@ -8,12 +8,6 @@
 </head>
 
 <body>
-<div class="nav">
-    <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a>
-    </span>
-    <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label"
-                                                                           args="[entityName]"/></g:link></span>
-</div>
 
 <div class="body">
     <h1><g:message code="default.create.label" args="[entityName]"/></h1>
@@ -25,20 +19,12 @@
             <g:renderErrors bean="${documentResourceInstance}" as="list"/>
         </div>
     </g:hasErrors>
-    <g:form action="save">
+    <g:uploadForm action="save">
         <div class="dialog">
             <table>
                 <tbody>
 
-                <tr class="prop">
-                    <td valign="top" class="name">
-                        <label for="uuid"><g:message code="documentResource.uuid.label" default="Uuid"/></label>
-                    </td>
-                    <td valign="top"
-                        class="value ${hasErrors(bean: documentResourceInstance, field: 'uuid', 'errors')}">
-                        <g:textField name="uuid" value="${documentResourceInstance?.uuid}"/>
-                    </td>
-                </tr>
+                <g:hiddenField name="uuid" value="null" />
 
                 <tr class="prop">
                     <td valign="top" class="name">
@@ -47,19 +33,8 @@
                     </td>
                     <td valign="top"
                         class="value ${hasErrors(bean: documentResourceInstance, field: 'createdBy', 'errors')}">
-                        <g:select name="createdBy.id" from="${com.intelligrape.linksharing.User.list()}" optionKey="id"
-                                  value="${documentResourceInstance?.createdBy?.id}"/>
-                    </td>
-                </tr>
-
-                <tr class="prop">
-                    <td valign="top" class="name">
-                        <label for="fileName"><g:message code="documentResource.fileName.label"
-                                                         default="File Name"/></label>
-                    </td>
-                    <td valign="top"
-                        class="value ${hasErrors(bean: documentResourceInstance, field: 'fileName', 'errors')}">
-                        <g:textField name="fileName" value="${documentResourceInstance?.fileName}"/>
+                        <ls:showLoggedInUserName/>
+                        <g:hiddenField name="createdBy.id" value="${session.currentUser}"/>
                     </td>
                 </tr>
 
@@ -89,13 +64,19 @@
                     <td valign="top" class="name">
                         <label for="topic"><g:message code="documentResource.topic.label" default="Topic"/></label>
                     </td>
-                    <td valign="top"
-                        class="value ${hasErrors(bean: documentResourceInstance, field: 'topic', 'errors')}">
-                        <g:select name="topic.id" from="${com.intelligrape.linksharing.Topic.list()}" optionKey="id"
-                                  value="${documentResourceInstance?.topic?.id}"/>
+                    <td valign="top" class="value ${hasErrors(bean: documentResourceInstance, field: 'topic', 'errors')}">
+                        ${documentResourceInstance?.topic?.name}
+                        <g:hiddenField name="topic.id" value="${documentResourceInstance?.topic?.id}"/>
                     </td>
                 </tr>
 
+                <tr class="prop">
+                    <td valign="top" class="name">
+                        <label for="document"><g:message code="documentResource.document.label" default="Document"/></label>
+                    </td>
+                    <td>
+                        <input type="file" name="document">
+                    </td>
                 </tbody>
             </table>
         </div>
@@ -104,7 +85,7 @@
             <span class="button"><g:submitButton name="create" class="save"
                                                  value="${message(code: 'default.button.create.label', default: 'Create')}"/></span>
         </div>
-    </g:form>
+    </g:uploadForm>
 </div>
 </body>
 </html>

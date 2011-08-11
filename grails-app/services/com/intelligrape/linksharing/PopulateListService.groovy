@@ -67,4 +67,17 @@ class PopulateListService {
         }
         return mostReadResourcesTotal
     }
+
+    def separateResourcesIntoIndividualTypeLists(Topic topicInstance, List<LinkResource> linkResources, List<DocumentResource> documentResources) {
+        topicInstance.resources.each {
+            if (it) {
+                if (it instanceof LinkResource) {
+                    linkResources << LinkResource.get(it.id)
+                } else {
+                    documentResources << DocumentResource.get(it.id)
+                }
+            }
+        }
+    }
+
 }

@@ -1,7 +1,5 @@
 package com.intelligrape.linksharing
 
-import javax.xml.soap.Text
-
 class Resource {
 
     Topic topic

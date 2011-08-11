@@ -58,15 +58,20 @@
 
                 <td valign="top" style="text-align: left;" class="value">
                     <ul>
-                        <g:each in="${topicInstance.resources}" var="resource">
+                        <g:each in="${linkResources}" var="resource">
                             <li><g:link controller="linkResource" action="show"
+                                        id="${resource.id}">${resource?.heading}</g:link></li>
+                        </g:each>
+                        <g:each in="${documentResources}" var="resource">
+                            <li><g:link controller="documentResource" action="show"
                                         id="${resource.id}">${resource?.heading}</g:link></li>
                         </g:each>
                     </ul>
                     <g:link controller="linkResource" action="create"
-                            params="['topic.id':topicInstance.id]">Add New Link Resource</g:link>
+                            params="['topic.id':topicInstance?.id]">Add New Link Resource</g:link>
                     <br>
-                    <g:link controller="documentResource" action="create">Add New Document Resource</g:link>
+                    <g:link controller="documentResource" action="create"
+                            params="['topic.id':topicInstance?.id]">Add New Document Resource</g:link>
                 </td>
 
             </tr>

@@ -27,7 +27,9 @@
             <tr class="prop">
                 <td valign="top" class="name"><g:message code="linkResource.url.label" default="Url"/></td>
 
-                <td valign="top" class="value">${fieldValue(bean: linkResourceInstance, field: "url")}</td>
+                <td valign="top" class="value">
+                    <g:link url="${linkResourceInstance?.url}">${fieldValue(bean: linkResourceInstance, field: "url")}</g:link>
+                </td>
 
             </tr>
 
