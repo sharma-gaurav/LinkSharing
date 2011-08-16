@@ -3,6 +3,7 @@ package com.intelligrape.linksharing
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
 
 class DocumentResourceController {
+    def populateListService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -12,12 +13,22 @@ class DocumentResourceController {
 
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [documentResourceInstanceList: DocumentResource.list(params), documentResourceInstanceTotal: DocumentResource.count()]
+        if (params.topicId) {
+            Topic topic = Topic.get(params.topicId)
+            List<DocumentResource> documentResources = Resource.findAllByTopicAndType(topic,"document",params)
+            Integer documentResourcesTotal = Resource.countByTopicAndType(topic,"document")
+            [documentResources: documentResources,documentResourcesTotal: documentResourcesTotal, topicId: params.topicId]
+        } else {
+            [documentResources: DocumentResource.list(params), documentResourcesTotal: DocumentResource.count()]
+        }
     }
 
     def create = {
         DocumentResource documentResourceInstance = new DocumentResource()
         documentResourceInstance.properties = params
+        if (params.topicId) {
+            documentResourceInstance.topic = Topic.get(params.topicId)
+        }
         return [documentResourceInstance: documentResourceInstance]
     }
 
@@ -104,10 +115,10 @@ class DocumentResourceController {
 
     def download = {
         DocumentResource documentResource = DocumentResource.get(params.id)
-        File file = new File("${ConfigurationHolder.config.path+documentResource.uuid}-${documentResource.fileName}")
+        File file = new File("${ConfigurationHolder.config.path + documentResource.uuid}-${documentResource.fileName}")
         response.setContentType("application/octet-stream")
-        response.setHeader("Content-disposition","filename=${documentResource.fileName}")
+        response.setHeader("Content-disposition", "filename=${documentResource.fileName}")
         response.outputStream << file.bytes
-        render(view:"show")
+        render(view: "show")
     }
 }

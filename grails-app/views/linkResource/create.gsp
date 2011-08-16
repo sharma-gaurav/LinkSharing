@@ -71,6 +71,8 @@
                     </td>
                 </tr>
 
+                <g:hiddenField name="type" value="link"/>
+
                 </tbody>
             </table>
         </div>

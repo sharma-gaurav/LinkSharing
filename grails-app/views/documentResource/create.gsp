@@ -24,7 +24,7 @@
             <table>
                 <tbody>
 
-                <g:hiddenField name="uuid" value="null" />
+                <g:hiddenField name="uuid" value="null"/>
 
                 <tr class="prop">
                     <td valign="top" class="name">
@@ -64,7 +64,8 @@
                     <td valign="top" class="name">
                         <label for="topic"><g:message code="documentResource.topic.label" default="Topic"/></label>
                     </td>
-                    <td valign="top" class="value ${hasErrors(bean: documentResourceInstance, field: 'topic', 'errors')}">
+                    <td valign="top"
+                        class="value ${hasErrors(bean: documentResourceInstance, field: 'topic', 'errors')}">
                         ${documentResourceInstance?.topic?.name}
                         <g:hiddenField name="topic.id" value="${documentResourceInstance?.topic?.id}"/>
                     </td>
@@ -72,11 +73,15 @@
 
                 <tr class="prop">
                     <td valign="top" class="name">
-                        <label for="document"><g:message code="documentResource.document.label" default="Document"/></label>
+                        <label for="document"><g:message code="documentResource.document.label"
+                                                         default="Document"/></label>
                     </td>
                     <td>
                         <input type="file" name="document">
                     </td>
+                </tr>
+
+                <g:hiddenField name="type" value="document"/>
                 </tbody>
             </table>
         </div>

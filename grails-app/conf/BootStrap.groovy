@@ -11,6 +11,5 @@ class BootStrap {
         bootstrapService.createDocumentResource()
         bootstrapService.createRead()
         bootstrapService.markUnread()
-        bootstrapService.printUnread()
     }
 }

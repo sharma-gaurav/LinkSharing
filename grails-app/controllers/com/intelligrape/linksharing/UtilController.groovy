@@ -8,10 +8,10 @@ class UtilController {
 
     def QuartzScheduler
     def index = {
-        User user1 = new User(userName: "test122", password: "password", confirmPassword: "password", name: "Gaurav",               \
-                               phoneNumber: 123456789, address: "new delhi", email: "111@xyz.com")
-        User user2 = new User(userName: "test222", password: "password", confirmPassword: "password", name: "Charu",               \
-                               phoneNumber: 123456789, address: "new delhi", email: "2222@def.com")
+        User user1 = new User(userName: "test122", password: "password", confirmPassword: "password", name: "Gaurav",                 \
+                                 phoneNumber: 123456789, address: "new delhi", email: "111@xyz.com")
+        User user2 = new User(userName: "test222", password: "password", confirmPassword: "password", name: "Charu",                 \
+                                 phoneNumber: 123456789, address: "new delhi", email: "2222@def.com")
         user1.save(flush: true)
 
         user2.save(flush: true)
@@ -31,8 +31,8 @@ class UtilController {
     def createResources = {
         Topic.list().each {Topic topic ->
             (1..10).each {
-                topic.addToResources(new LinkResource(topic: topic, createdBy: User.get(1), heading: "Grails Heading",             \
-                     summary: "Grails summary", url: "http://www.google.com"))
+                topic.addToResources(new LinkResource(topic: topic, createdBy: User.get(1), heading: "Grails Heading",               \
+                       summary: "Grails summary", url: "http://www.google.com"))
             }
         }
     }

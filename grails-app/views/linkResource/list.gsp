@@ -1,4 +1,4 @@
-<%@ page import="com.intelligrape.linksharing.LinkResource" %>
+<%@ page import="com.intelligrape.linksharing.Topic; com.intelligrape.linksharing.LinkResource" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -8,12 +8,6 @@
 </head>
 
 <body>
-<div class="nav">
-    <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a>
-    </span>
-    <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label"
-                                                                               args="[entityName]"/></g:link></span>
-</div>
 
 <div class="body">
     <h1><g:message code="default.list.label" args="[entityName]"/></h1>
@@ -25,25 +19,30 @@
             <thead>
             <tr>
 
-                <g:sortableColumn property="id" title="${message(code: 'linkResource.id.label', default: 'Id')}"/>
+                <g:sortableColumn property="id" title="${message(code: 'linkResource.id.label', default: 'Id')}"
+                                  params="['topicId':topicId]"/>
 
-                <g:sortableColumn property="url" title="${message(code: 'linkResource.url.label', default: 'Url')}"/>
+                <g:sortableColumn property="url" title="${message(code: 'linkResource.url.label', default: 'Url')}"
+                                  params="['topicId':topicId]"/>
 
                 <th><g:message code="linkResource.createdBy.label" default="Created By"/></th>
 
                 <g:sortableColumn property="dateCreated"
-                                  title="${message(code: 'linkResource.dateCreated.label', default: 'Date Created')}"/>
+                                  title="${message(code: 'linkResource.dateCreated.label', default: 'Date Created')}"
+                                  params="['topicId':topicId]"/>
 
                 <g:sortableColumn property="heading"
-                                  title="${message(code: 'linkResource.heading.label', default: 'Heading')}"/>
+                                  title="${message(code: 'linkResource.heading.label', default: 'Heading')}"
+                                  params="['topicId':topicId]"/>
 
                 <g:sortableColumn property="summary"
-                                  title="${message(code: 'linkResource.summary.label', default: 'Summary')}"/>
+                                  title="${message(code: 'linkResource.summary.label', default: 'Summary')}"
+                                  params="['topicId':topicId]"/>
 
             </tr>
             </thead>
             <tbody>
-            <g:each in="${linkResourceInstanceList}" status="i" var="linkResourceInstance">
+            <g:each in="${linkResources}" status="i" var="linkResourceInstance">
                 <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
 
                     <td><g:link action="show"
@@ -51,7 +50,7 @@
 
                     <td>${fieldValue(bean: linkResourceInstance, field: "url")}</td>
 
-                    <td>${fieldValue(bean: linkResourceInstance, field: "createdBy")}</td>
+                    <td>${linkResourceInstance.createdBy.name}</td>
 
                     <td><g:formatDate date="${linkResourceInstance.dateCreated}"/></td>
 
@@ -66,8 +65,14 @@
     </div>
 
     <div class="paginateButtons">
-        <g:paginate total="${linkResourceInstanceTotal}"/>
+        <g:paginate total="${linkResourcesTotal}" params="['topicId':topicId]"/>
     </div>
+
+    <ls:ifSubscribed topicId="${topicId}">
+        <g:form controller="linkResource" action="create" params="['topicId':topicId]">
+            <g:submitButton name="create" value="Add List Resource" />
+        </g:form>
+    </ls:ifSubscribed>
 </div>
 </body>
 </html>

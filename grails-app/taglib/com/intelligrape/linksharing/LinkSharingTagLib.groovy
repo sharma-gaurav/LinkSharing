@@ -36,6 +36,15 @@ class LinkSharingTagLib {
             out << body()
         }
     }
+
+    def ifSubscribed = {attrs, body ->
+        Long topicID = attrs['topicId'].toLong()
+        Integer topicCount = UserTopic.countByUserAndTopic(User.get(session.currentUser), Topic.get(topicID))
+        if (topicCount) {
+            out << body()
+        }
+    }
+
     def ifRead = {attrs, body ->
         UserResource userResource = UserResource.findByUserAndResource(User.get(session.currentUser), attrs['resource'])
         if (!(User.get(session.currentUser).isAdmin) && userResource.isRead) {

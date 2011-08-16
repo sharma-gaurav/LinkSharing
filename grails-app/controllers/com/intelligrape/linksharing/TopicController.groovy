@@ -1,8 +1,6 @@
 package com.intelligrape.linksharing
 
 class TopicController {
-    def populateListService
-
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index = {
@@ -36,10 +34,7 @@ class TopicController {
     def show = {
         Topic topicInstance = Topic.get(params.id)
         if (topicInstance) {
-            List<LinkResource> linkResources = []
-            List<DocumentResource> documentResources = []
-            populateListService.separateResourcesIntoIndividualTypeLists(topicInstance, linkResources, documentResources)
-            [topicInstance: topicInstance, linkResources: linkResources, documentResources: documentResources]
+            [topicInstance: topicInstance]
         } else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'topic.label', default: 'Topic'), params.id])}"
             redirect(action: "list")

@@ -84,7 +84,8 @@
                                                      value="${message(code: 'default.button.delete.label', default: 'Delete')}"
                                                      onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/></span>
             </ls:ifCurrentUserOrAdmin>
-            <span class="button"><g:actionSubmit action="markUnread" value="Mark Unread" onclick="return alert('Resource Marked Unread')"/></span>
+            <span class="button"><g:actionSubmit action="markUnread" value="Mark Unread"
+                                                 onclick="return alert('Resource Marked Unread')" /></span>
         </g:form>
     </div>
 </div>

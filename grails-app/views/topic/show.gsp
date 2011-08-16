@@ -57,21 +57,11 @@
                 <td valign="top" class="name"><g:message code="topic.resources.label" default="Resources"/></td>
 
                 <td valign="top" style="text-align: left;" class="value">
-                    <ul>
-                        <g:each in="${linkResources}" var="resource">
-                            <li><g:link controller="linkResource" action="show"
-                                        id="${resource.id}">${resource?.heading}</g:link></li>
-                        </g:each>
-                        <g:each in="${documentResources}" var="resource">
-                            <li><g:link controller="documentResource" action="show"
-                                        id="${resource.id}">${resource?.heading}</g:link></li>
-                        </g:each>
-                    </ul>
-                    <g:link controller="linkResource" action="create"
-                            params="['topic.id':topicInstance?.id]">Add New Link Resource</g:link>
+                    <g:link controller="linkResource" action="list"
+                            params="[topicId:topicInstance.id]">Link Resources</g:link>
                     <br>
-                    <g:link controller="documentResource" action="create"
-                            params="['topic.id':topicInstance?.id]">Add New Document Resource</g:link>
+                    <g:link controller="documentResource" action="list"
+                            params="[topicId:topicInstance.id]">Document Resources</g:link>
                 </td>
 
             </tr>
@@ -91,9 +81,9 @@
                                                      value="${message(code: 'default.button.delete.label', default: 'Delete')}"
                                                      onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/></span>
             </ls:ifCurrentUserOrAdmin>
-            <g:link controller='invitation' action='send'
-                    params="['id':topicInstance?.id]">Send Invitations</g:link>
-
+            <span class="button"><g:submitButton name="invitation" controller='invitation' action='send'
+                                                 params="['id':topicInstance?.id]" value="Invite Others"/>
+            </span>
         </g:form>
     </div>
 

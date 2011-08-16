@@ -7,9 +7,9 @@ class Resource {
     Date dateCreated
     String heading
     String summary
+    String type
 
     static belongsTo = [Topic, User];
-
 
     static mapping = {
         tablePerHierarchy false
@@ -19,5 +19,6 @@ class Resource {
     static constraints = {
         heading(blank: false, nullable: false)
         summary(blank: false, nullable: false)
+        type(inList: ["link","document"])
     }
 }
